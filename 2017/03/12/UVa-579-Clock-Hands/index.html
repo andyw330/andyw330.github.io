@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="UVa," />
 
 
 
@@ -89,12 +89,22 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="WhiteCat's Blog">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="題目連結：UVa 579 - Clock Hands
+解法1直接算角度相減，輸出小於等於180度角的部分 (0.030s)
+12345678910111213141516#include &amp;lt;stdio.h&amp;gt;#include &amp;lt;math.h&amp;gt;int main() &amp;#123;    int h, m;    float ang1, ang2, ans;    while (s">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UVa 579 - Clock Hands">
+<meta property="og:url" content="http://yoursite.com/2017/03/12/UVa-579-Clock-Hands/index.html">
 <meta property="og:site_name" content="WhiteCat's Blog">
+<meta property="og:description" content="題目連結：UVa 579 - Clock Hands
+解法1直接算角度相減，輸出小於等於180度角的部分 (0.030s)
+12345678910111213141516#include &amp;lt;stdio.h&amp;gt;#include &amp;lt;math.h&amp;gt;int main() &amp;#123;    int h, m;    float ang1, ang2, ans;    while (s">
+<meta property="og:updated_time" content="2017-03-12T14:14:32.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="WhiteCat's Blog">
+<meta name="twitter:title" content="UVa 579 - Clock Hands">
+<meta name="twitter:description" content="題目連結：UVa 579 - Clock Hands
+解法1直接算角度相減，輸出小於等於180度角的部分 (0.030s)
+12345678910111213141516#include &amp;lt;stdio.h&amp;gt;#include &amp;lt;math.h&amp;gt;int main() &amp;#123;    int h, m;    float ang1, ang2, ans;    while (s">
 
 
 
@@ -122,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/2017/03/12/UVa-579-Clock-Hands/"/>
 
 
 
 
 
-  <title> WhiteCat's Blog </title>
+  <title> UVa 579 - Clock Hands | WhiteCat's Blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
@@ -153,9 +163,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -258,9 +266,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
 
@@ -290,10 +298,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2017/03/12/UVa-579-Clock-Hands/" itemprop="url">
-                  UVa 579 - Clock Hands
-                </a>
+                UVa 579 - Clock Hands
               
             
           </h1>
@@ -376,197 +381,71 @@
       
 
       
-        
-          
-            <p>題目連結：<a href="https://uva.onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;category=24&amp;page=show_problem&amp;problem=520" target="_blank" rel="external">UVa 579 - Clock Hands</a></p>
+        <p>題目連結：<a href="https://uva.onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;category=24&amp;page=show_problem&amp;problem=520" target="_blank" rel="external">UVa 579 - Clock Hands</a></p>
 <h1 id="解法1"><a href="#解法1" class="headerlink" title="解法1"></a>解法1</h1><p>直接算角度相減，輸出小於等於180度角的部分 (0.030s)</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;math.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> h, m;</div><div class="line">    <span class="keyword">float</span> ang1, ang2, ans;</div><div class="line">    <span class="keyword">while</span> (<span class="built_in">scanf</span>(<span class="string">"%d:%d"</span>, &amp;h, &amp;m), h || m) &#123;</div><div class="line">        ang1 = h * <span class="number">30</span> + m * <span class="number">0.5</span>;</div><div class="line">        ang2 = m * <span class="number">6</span>;</div><div class="line">        ans = <span class="built_in">fabs</span>(ang1 - ang2);</div><div class="line">        <span class="keyword">if</span> (ans &gt; <span class="number">180</span>)</div><div class="line">            ans = <span class="number">360</span> - ans;</div><div class="line">        <span class="built_in">printf</span>(<span class="string">"%.3f\n"</span>, ans);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <h1 id="解法2"><a href="#解法2" class="headerlink" title="解法2"></a>解法2</h1><p>直接建table做查找 (0.000s)</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></div><div class="line"></div><div class="line"><span class="keyword">char</span> table[<span class="number">13</span>][<span class="number">60</span>][<span class="number">8</span>] = &#123;</div><div class="line">    &#123;<span class="string">"0.000"</span>, <span class="string">"5.500"</span>, <span class="string">"11.000"</span>, <span class="string">"16.500"</span>, <span class="string">"22.000"</span>, <span class="string">"27.500"</span>, <span class="string">"33.000"</span>, <span class="string">"38.500"</span>, <span class="string">"44.000"</span>, <span class="string">"49.500"</span>, <span class="string">"55.000"</span>, <span class="string">"60.500"</span>, <span class="string">"66.000"</span>, <span class="string">"71.500"</span>, <span class="string">"77.000"</span>, <span class="string">"82.500"</span>, <span class="string">"88.000"</span>, <span class="string">"93.500"</span>, <span class="string">"99.000"</span>, <span class="string">"104.500"</span>, <span class="string">"110.000"</span>, <span class="string">"115.500"</span>, <span class="string">"121.000"</span>, <span class="string">"126.500"</span>, <span class="string">"132.000"</span>, <span class="string">"137.500"</span>, <span class="string">"143.000"</span>, <span class="string">"148.500"</span>, <span class="string">"154.000"</span>, <span class="string">"159.500"</span>, <span class="string">"165.000"</span>, <span class="string">"170.500"</span>, <span class="string">"176.000"</span>, <span class="string">"178.500"</span>, <span class="string">"173.000"</span>, <span class="string">"167.500"</span>, <span class="string">"162.000"</span>, <span class="string">"156.500"</span>, <span class="string">"151.000"</span>, <span class="string">"145.500"</span>, <span class="string">"140.000"</span>, <span class="string">"134.500"</span>, <span class="string">"129.000"</span>, <span class="string">"123.500"</span>, <span class="string">"118.000"</span>, <span class="string">"112.500"</span>, <span class="string">"107.000"</span>, <span class="string">"101.500"</span>, <span class="string">"96.000"</span>, <span class="string">"90.500"</span>, <span class="string">"85.000"</span>, <span class="string">"79.500"</span>, <span class="string">"74.000"</span>, <span class="string">"68.500"</span>, <span class="string">"63.000"</span>, <span class="string">"57.500"</span>, <span class="string">"52.000"</span>, <span class="string">"46.500"</span>, <span class="string">"41.000"</span>, <span class="string">"35.500"</span>&#125;,</div><div class="line">    &#123;<span class="string">"30.000"</span>, <span class="string">"24.500"</span>, <span class="string">"19.000"</span>, <span class="string">"13.500"</span>, <span class="string">"8.000"</span>, <span class="string">"2.500"</span>, <span class="string">"3.000"</span>, <span class="string">"8.500"</span>, <span class="string">"14.000"</span>, <span class="string">"19.500"</span>, <span class="string">"25.000"</span>, <span class="string">"30.500"</span>, <span class="string">"36.000"</span>, <span class="string">"41.500"</span>, <span class="string">"47.000"</span>, <span class="string">"52.500"</span>, <span class="string">"58.000"</span>, <span class="string">"63.500"</span>, <span class="string">"69.000"</span>, <span class="string">"74.500"</span>, <span class="string">"80.000"</span>, <span class="string">"85.500"</span>, <span class="string">"91.000"</span>, <span class="string">"96.500"</span>, <span class="string">"102.000"</span>, <span class="string">"107.500"</span>, <span class="string">"113.000"</span>, <span class="string">"118.500"</span>, <span class="string">"124.000"</span>, <span class="string">"129.500"</span>, <span class="string">"135.000"</span>, <span class="string">"140.500"</span>, <span class="string">"146.000"</span>, <span class="string">"151.500"</span>, <span class="string">"157.000"</span>, <span class="string">"162.500"</span>, <span class="string">"168.000"</span>, <span class="string">"173.500"</span>, <span class="string">"179.000"</span>, <span class="string">"175.500"</span>, <span class="string">"170.000"</span>, <span class="string">"164.500"</span>, <span class="string">"159.000"</span>, <span class="string">"153.500"</span>, <span class="string">"148.000"</span>, <span class="string">"142.500"</span>, <span class="string">"137.000"</span>, <span class="string">"131.500"</span>, <span class="string">"126.000"</span>, <span class="string">"120.500"</span>, <span class="string">"115.000"</span>, <span class="string">"109.500"</span>, <span class="string">"104.000"</span>, <span class="string">"98.500"</span>, <span class="string">"93.000"</span>, <span class="string">"87.500"</span>, <span class="string">"82.000"</span>, <span class="string">"76.500"</span>, <span class="string">"71.000"</span>, <span class="string">"65.500"</span>&#125;,</div><div class="line">    &#123;<span class="string">"60.000"</span>, <span class="string">"54.500"</span>, <span class="string">"49.000"</span>, <span class="string">"43.500"</span>, <span class="string">"38.000"</span>, <span class="string">"32.500"</span>, <span class="string">"27.000"</span>, <span class="string">"21.500"</span>, <span class="string">"16.000"</span>, <span class="string">"10.500"</span>, <span class="string">"5.000"</span>, <span class="string">"0.500"</span>, <span class="string">"6.000"</span>, <span class="string">"11.500"</span>, <span class="string">"17.000"</span>, <span class="string">"22.500"</span>, <span class="string">"28.000"</span>, <span class="string">"33.500"</span>, <span class="string">"39.000"</span>, <span class="string">"44.500"</span>, <span class="string">"50.000"</span>, <span class="string">"55.500"</span>, <span class="string">"61.000"</span>, <span class="string">"66.500"</span>, <span class="string">"72.000"</span>, <span class="string">"77.500"</span>, <span class="string">"83.000"</span>, <span class="string">"88.500"</span>, <span class="string">"94.000"</span>, <span class="string">"99.500"</span>, <span class="string">"105.000"</span>, <span class="string">"110.500"</span>, <span class="string">"116.000"</span>, <span class="string">"121.500"</span>, <span class="string">"127.000"</span>, <span class="string">"132.500"</span>, <span class="string">"138.000"</span>, <span class="string">"143.500"</span>, <span class="string">"149.000"</span>, <span class="string">"154.500"</span>, <span class="string">"160.000"</span>, <span class="string">"165.500"</span>, <span class="string">"171.000"</span>, <span class="string">"176.500"</span>, <span class="string">"178.000"</span>, <span class="string">"172.500"</span>, <span class="string">"167.000"</span>, <span class="string">"161.500"</span>, <span class="string">"156.000"</span>, <span class="string">"150.500"</span>, <span class="string">"145.000"</span>, <span class="string">"139.500"</span>, <span class="string">"134.000"</span>, <span class="string">"128.500"</span>, <span class="string">"123.000"</span>, <span class="string">"117.500"</span>, <span class="string">"112.000"</span>, <span class="string">"106.500"</span>, <span class="string">"101.000"</span>, <span class="string">"95.500"</span>&#125;,</div><div class="line">    &#123;<span class="string">"90.000"</span>, <span class="string">"84.500"</span>, <span class="string">"79.000"</span>, <span class="string">"73.500"</span>, <span class="string">"68.000"</span>, <span class="string">"62.500"</span>, <span class="string">"57.000"</span>, <span class="string">"51.500"</span>, <span class="string">"46.000"</span>, <span class="string">"40.500"</span>, <span class="string">"35.000"</span>, <span class="string">"29.500"</span>, <span class="string">"24.000"</span>, <span class="string">"18.500"</span>, <span class="string">"13.000"</span>, <span class="string">"7.500"</span>, <span class="string">"2.000"</span>, <span class="string">"3.500"</span>, <span class="string">"9.000"</span>, <span class="string">"14.500"</span>, <span class="string">"20.000"</span>, <span class="string">"25.500"</span>, <span class="string">"31.000"</span>, <span class="string">"36.500"</span>, <span class="string">"42.000"</span>, <span class="string">"47.500"</span>, <span class="string">"53.000"</span>, <span class="string">"58.500"</span>, <span class="string">"64.000"</span>, <span class="string">"69.500"</span>, <span class="string">"75.000"</span>, <span class="string">"80.500"</span>, <span class="string">"86.000"</span>, <span class="string">"91.500"</span>, <span class="string">"97.000"</span>, <span class="string">"102.500"</span>, <span class="string">"108.000"</span>, <span class="string">"113.500"</span>, <span class="string">"119.000"</span>, <span class="string">"124.500"</span>, <span class="string">"130.000"</span>, <span class="string">"135.500"</span>, <span class="string">"141.000"</span>, <span class="string">"146.500"</span>, <span class="string">"152.000"</span>, <span class="string">"157.500"</span>, <span class="string">"163.000"</span>, <span class="string">"168.500"</span>, <span class="string">"174.000"</span>, <span class="string">"179.500"</span>, <span class="string">"175.000"</span>, <span class="string">"169.500"</span>, <span class="string">"164.000"</span>, <span class="string">"158.500"</span>, <span class="string">"153.000"</span>, <span class="string">"147.500"</span>, <span class="string">"142.000"</span>, <span class="string">"136.500"</span>, <span class="string">"131.000"</span>, <span class="string">"125.500"</span>&#125;,</div><div class="line">    &#123;<span class="string">"120.000"</span>, <span class="string">"114.500"</span>, <span class="string">"109.000"</span>, <span class="string">"103.500"</span>, <span class="string">"98.000"</span>, <span class="string">"92.500"</span>, <span class="string">"87.000"</span>, <span class="string">"81.500"</span>, <span class="string">"76.000"</span>, <span class="string">"70.500"</span>, <span class="string">"65.000"</span>, <span class="string">"59.500"</span>, <span class="string">"54.000"</span>, <span class="string">"48.500"</span>, <span class="string">"43.000"</span>, <span class="string">"37.500"</span>, <span class="string">"32.000"</span>, <span class="string">"26.500"</span>, <span class="string">"21.000"</span>, <span class="string">"15.500"</span>, <span class="string">"10.000"</span>, <span class="string">"4.500"</span>, <span class="string">"1.000"</span>, <span class="string">"6.500"</span>, <span class="string">"12.000"</span>, <span class="string">"17.500"</span>, <span class="string">"23.000"</span>, <span class="string">"28.500"</span>, <span class="string">"34.000"</span>, <span class="string">"39.500"</span>, <span class="string">"45.000"</span>, <span class="string">"50.500"</span>, <span class="string">"56.000"</span>, <span class="string">"61.500"</span>, <span class="string">"67.000"</span>, <span class="string">"72.500"</span>, <span class="string">"78.000"</span>, <span class="string">"83.500"</span>, <span class="string">"89.000"</span>, <span class="string">"94.500"</span>, <span class="string">"100.000"</span>, <span class="string">"105.500"</span>, <span class="string">"111.000"</span>, <span class="string">"116.500"</span>, <span class="string">"122.000"</span>, <span class="string">"127.500"</span>, <span class="string">"133.000"</span>, <span class="string">"138.500"</span>, <span class="string">"144.000"</span>, <span class="string">"149.500"</span>, <span class="string">"155.000"</span>, <span class="string">"160.500"</span>, <span class="string">"166.000"</span>, <span class="string">"171.500"</span>, <span class="string">"177.000"</span>, <span class="string">"177.500"</span>, <span class="string">"172.000"</span>, <span class="string">"166.500"</span>, <span class="string">"161.000"</span>, <span class="string">"155.500"</span>&#125;,</div><div class="line">    &#123;<span class="string">"150.000"</span>, <span class="string">"144.500"</span>, <span class="string">"139.000"</span>, <span class="string">"133.500"</span>, <span class="string">"128.000"</span>, <span class="string">"122.500"</span>, <span class="string">"117.000"</span>, <span class="string">"111.500"</span>, <span class="string">"106.000"</span>, <span class="string">"100.500"</span>, <span class="string">"95.000"</span>, <span class="string">"89.500"</span>, <span class="string">"84.000"</span>, <span class="string">"78.500"</span>, <span class="string">"73.000"</span>, <span class="string">"67.500"</span>, <span class="string">"62.000"</span>, <span class="string">"56.500"</span>, <span class="string">"51.000"</span>, <span class="string">"45.500"</span>, <span class="string">"40.000"</span>, <span class="string">"34.500"</span>, <span class="string">"29.000"</span>, <span class="string">"23.500"</span>, <span class="string">"18.000"</span>, <span class="string">"12.500"</span>, <span class="string">"7.000"</span>, <span class="string">"1.500"</span>, <span class="string">"4.000"</span>, <span class="string">"9.500"</span>, <span class="string">"15.000"</span>, <span class="string">"20.500"</span>, <span class="string">"26.000"</span>, <span class="string">"31.500"</span>, <span class="string">"37.000"</span>, <span class="string">"42.500"</span>, <span class="string">"48.000"</span>, <span class="string">"53.500"</span>, <span class="string">"59.000"</span>, <span class="string">"64.500"</span>, <span class="string">"70.000"</span>, <span class="string">"75.500"</span>, <span class="string">"81.000"</span>, <span class="string">"86.500"</span>, <span class="string">"92.000"</span>, <span class="string">"97.500"</span>, <span class="string">"103.000"</span>, <span class="string">"108.500"</span>, <span class="string">"114.000"</span>, <span class="string">"119.500"</span>, <span class="string">"125.000"</span>, <span class="string">"130.500"</span>, <span class="string">"136.000"</span>, <span class="string">"141.500"</span>, <span class="string">"147.000"</span>, <span class="string">"152.500"</span>, <span class="string">"158.000"</span>, <span class="string">"163.500"</span>, <span class="string">"169.000"</span>, <span class="string">"174.500"</span>&#125;,</div><div class="line">    &#123;<span class="string">"180.000"</span>, <span class="string">"174.500"</span>, <span class="string">"169.000"</span>, <span class="string">"163.500"</span>, <span class="string">"158.000"</span>, <span class="string">"152.500"</span>, <span class="string">"147.000"</span>, <span class="string">"141.500"</span>, <span class="string">"136.000"</span>, <span class="string">"130.500"</span>, <span class="string">"125.000"</span>, <span class="string">"119.500"</span>, <span class="string">"114.000"</span>, <span class="string">"108.500"</span>, <span class="string">"103.000"</span>, <span class="string">"97.500"</span>, <span class="string">"92.000"</span>, <span class="string">"86.500"</span>, <span class="string">"81.000"</span>, <span class="string">"75.500"</span>, <span class="string">"70.000"</span>, <span class="string">"64.500"</span>, <span class="string">"59.000"</span>, <span class="string">"53.500"</span>, <span class="string">"48.000"</span>, <span class="string">"42.500"</span>, <span class="string">"37.000"</span>, <span class="string">"31.500"</span>, <span class="string">"26.000"</span>, <span class="string">"20.500"</span>, <span class="string">"15.000"</span>, <span class="string">"9.500"</span>, <span class="string">"4.000"</span>, <span class="string">"1.500"</span>, <span class="string">"7.000"</span>, <span class="string">"12.500"</span>, <span class="string">"18.000"</span>, <span class="string">"23.500"</span>, <span class="string">"29.000"</span>, <span class="string">"34.500"</span>, <span class="string">"40.000"</span>, <span class="string">"45.500"</span>, <span class="string">"51.000"</span>, <span class="string">"56.500"</span>, <span class="string">"62.000"</span>, <span class="string">"67.500"</span>, <span class="string">"73.000"</span>, <span class="string">"78.500"</span>, <span class="string">"84.000"</span>, <span class="string">"89.500"</span>, <span class="string">"95.000"</span>, <span class="string">"100.500"</span>, <span class="string">"106.000"</span>, <span class="string">"111.500"</span>, <span class="string">"117.000"</span>, <span class="string">"122.500"</span>, <span class="string">"128.000"</span>, <span class="string">"133.500"</span>, <span class="string">"139.000"</span>, <span class="string">"144.500"</span>&#125;,</div><div class="line">    &#123;<span class="string">"150.000"</span>, <span class="string">"155.500"</span>, <span class="string">"161.000"</span>, <span class="string">"166.500"</span>, <span class="string">"172.000"</span>, <span class="string">"177.500"</span>, <span class="string">"177.000"</span>, <span class="string">"171.500"</span>, <span class="string">"166.000"</span>, <span class="string">"160.500"</span>, <span class="string">"155.000"</span>, <span class="string">"149.500"</span>, <span class="string">"144.000"</span>, <span class="string">"138.500"</span>, <span class="string">"133.000"</span>, <span class="string">"127.500"</span>, <span class="string">"122.000"</span>, <span class="string">"116.500"</span>, <span class="string">"111.000"</span>, <span class="string">"105.500"</span>, <span class="string">"100.000"</span>, <span class="string">"94.500"</span>, <span class="string">"89.000"</span>, <span class="string">"83.500"</span>, <span class="string">"78.000"</span>, <span class="string">"72.500"</span>, <span class="string">"67.000"</span>, <span class="string">"61.500"</span>, <span class="string">"56.000"</span>, <span class="string">"50.500"</span>, <span class="string">"45.000"</span>, <span class="string">"39.500"</span>, <span class="string">"34.000"</span>, <span class="string">"28.500"</span>, <span class="string">"23.000"</span>, <span class="string">"17.500"</span>, <span class="string">"12.000"</span>, <span class="string">"6.500"</span>, <span class="string">"1.000"</span>, <span class="string">"4.500"</span>, <span class="string">"10.000"</span>, <span class="string">"15.500"</span>, <span class="string">"21.000"</span>, <span class="string">"26.500"</span>, <span class="string">"32.000"</span>, <span class="string">"37.500"</span>, <span class="string">"43.000"</span>, <span class="string">"48.500"</span>, <span class="string">"54.000"</span>, <span class="string">"59.500"</span>, <span class="string">"65.000"</span>, <span class="string">"70.500"</span>, <span class="string">"76.000"</span>, <span class="string">"81.500"</span>, <span class="string">"87.000"</span>, <span class="string">"92.500"</span>, <span class="string">"98.000"</span>, <span class="string">"103.500"</span>, <span class="string">"109.000"</span>, <span class="string">"114.500"</span>&#125;,</div><div class="line">    &#123;<span class="string">"120.000"</span>, <span class="string">"125.500"</span>, <span class="string">"131.000"</span>, <span class="string">"136.500"</span>, <span class="string">"142.000"</span>, <span class="string">"147.500"</span>, <span class="string">"153.000"</span>, <span class="string">"158.500"</span>, <span class="string">"164.000"</span>, <span class="string">"169.500"</span>, <span class="string">"175.000"</span>, <span class="string">"179.500"</span>, <span class="string">"174.000"</span>, <span class="string">"168.500"</span>, <span class="string">"163.000"</span>, <span class="string">"157.500"</span>, <span class="string">"152.000"</span>, <span class="string">"146.500"</span>, <span class="string">"141.000"</span>, <span class="string">"135.500"</span>, <span class="string">"130.000"</span>, <span class="string">"124.500"</span>, <span class="string">"119.000"</span>, <span class="string">"113.500"</span>, <span class="string">"108.000"</span>, <span class="string">"102.500"</span>, <span class="string">"97.000"</span>, <span class="string">"91.500"</span>, <span class="string">"86.000"</span>, <span class="string">"80.500"</span>, <span class="string">"75.000"</span>, <span class="string">"69.500"</span>, <span class="string">"64.000"</span>, <span class="string">"58.500"</span>, <span class="string">"53.000"</span>, <span class="string">"47.500"</span>, <span class="string">"42.000"</span>, <span class="string">"36.500"</span>, <span class="string">"31.000"</span>, <span class="string">"25.500"</span>, <span class="string">"20.000"</span>, <span class="string">"14.500"</span>, <span class="string">"9.000"</span>, <span class="string">"3.500"</span>, <span class="string">"2.000"</span>, <span class="string">"7.500"</span>, <span class="string">"13.000"</span>, <span class="string">"18.500"</span>, <span class="string">"24.000"</span>, <span class="string">"29.500"</span>, <span class="string">"35.000"</span>, <span class="string">"40.500"</span>, <span class="string">"46.000"</span>, <span class="string">"51.500"</span>, <span class="string">"57.000"</span>, <span class="string">"62.500"</span>, <span class="string">"68.000"</span>, <span class="string">"73.500"</span>, <span class="string">"79.000"</span>, <span class="string">"84.500"</span>&#125;,</div><div class="line">    &#123;<span class="string">"90.000"</span>, <span class="string">"95.500"</span>, <span class="string">"101.000"</span>, <span class="string">"106.500"</span>, <span class="string">"112.000"</span>, <span class="string">"117.500"</span>, <span class="string">"123.000"</span>, <span class="string">"128.500"</span>, <span class="string">"134.000"</span>, <span class="string">"139.500"</span>, <span class="string">"145.000"</span>, <span class="string">"150.500"</span>, <span class="string">"156.000"</span>, <span class="string">"161.500"</span>, <span class="string">"167.000"</span>, <span class="string">"172.500"</span>, <span class="string">"178.000"</span>, <span class="string">"176.500"</span>, <span class="string">"171.000"</span>, <span class="string">"165.500"</span>, <span class="string">"160.000"</span>, <span class="string">"154.500"</span>, <span class="string">"149.000"</span>, <span class="string">"143.500"</span>, <span class="string">"138.000"</span>, <span class="string">"132.500"</span>, <span class="string">"127.000"</span>, <span class="string">"121.500"</span>, <span class="string">"116.000"</span>, <span class="string">"110.500"</span>, <span class="string">"105.000"</span>, <span class="string">"99.500"</span>, <span class="string">"94.000"</span>, <span class="string">"88.500"</span>, <span class="string">"83.000"</span>, <span class="string">"77.500"</span>, <span class="string">"72.000"</span>, <span class="string">"66.500"</span>, <span class="string">"61.000"</span>, <span class="string">"55.500"</span>, <span class="string">"50.000"</span>, <span class="string">"44.500"</span>, <span class="string">"39.000"</span>, <span class="string">"33.500"</span>, <span class="string">"28.000"</span>, <span class="string">"22.500"</span>, <span class="string">"17.000"</span>, <span class="string">"11.500"</span>, <span class="string">"6.000"</span>, <span class="string">"0.500"</span>, <span class="string">"5.000"</span>, <span class="string">"10.500"</span>, <span class="string">"16.000"</span>, <span class="string">"21.500"</span>, <span class="string">"27.000"</span>, <span class="string">"32.500"</span>, <span class="string">"38.000"</span>, <span class="string">"43.500"</span>, <span class="string">"49.000"</span>, <span class="string">"54.500"</span>&#125;,</div><div class="line">    &#123;<span class="string">"60.000"</span>, <span class="string">"65.500"</span>, <span class="string">"71.000"</span>, <span class="string">"76.500"</span>, <span class="string">"82.000"</span>, <span class="string">"87.500"</span>, <span class="string">"93.000"</span>, <span class="string">"98.500"</span>, <span class="string">"104.000"</span>, <span class="string">"109.500"</span>, <span class="string">"115.000"</span>, <span class="string">"120.500"</span>, <span class="string">"126.000"</span>, <span class="string">"131.500"</span>, <span class="string">"137.000"</span>, <span class="string">"142.500"</span>, <span class="string">"148.000"</span>, <span class="string">"153.500"</span>, <span class="string">"159.000"</span>, <span class="string">"164.500"</span>, <span class="string">"170.000"</span>, <span class="string">"175.500"</span>, <span class="string">"179.000"</span>, <span class="string">"173.500"</span>, <span class="string">"168.000"</span>, <span class="string">"162.500"</span>, <span class="string">"157.000"</span>, <span class="string">"151.500"</span>, <span class="string">"146.000"</span>, <span class="string">"140.500"</span>, <span class="string">"135.000"</span>, <span class="string">"129.500"</span>, <span class="string">"124.000"</span>, <span class="string">"118.500"</span>, <span class="string">"113.000"</span>, <span class="string">"107.500"</span>, <span class="string">"102.000"</span>, <span class="string">"96.500"</span>, <span class="string">"91.000"</span>, <span class="string">"85.500"</span>, <span class="string">"80.000"</span>, <span class="string">"74.500"</span>, <span class="string">"69.000"</span>, <span class="string">"63.500"</span>, <span class="string">"58.000"</span>, <span class="string">"52.500"</span>, <span class="string">"47.000"</span>, <span class="string">"41.500"</span>, <span class="string">"36.000"</span>, <span class="string">"30.500"</span>, <span class="string">"25.000"</span>, <span class="string">"19.500"</span>, <span class="string">"14.000"</span>, <span class="string">"8.500"</span>, <span class="string">"3.000"</span>, <span class="string">"2.500"</span>, <span class="string">"8.000"</span>, <span class="string">"13.500"</span>, <span class="string">"19.000"</span>, <span class="string">"24.500"</span>&#125;,</div><div class="line">    &#123;<span class="string">"30.000"</span>, <span class="string">"35.500"</span>, <span class="string">"41.000"</span>, <span class="string">"46.500"</span>, <span class="string">"52.000"</span>, <span class="string">"57.500"</span>, <span class="string">"63.000"</span>, <span class="string">"68.500"</span>, <span class="string">"74.000"</span>, <span class="string">"79.500"</span>, <span class="string">"85.000"</span>, <span class="string">"90.500"</span>, <span class="string">"96.000"</span>, <span class="string">"101.500"</span>, <span class="string">"107.000"</span>, <span class="string">"112.500"</span>, <span class="string">"118.000"</span>, <span class="string">"123.500"</span>, <span class="string">"129.000"</span>, <span class="string">"134.500"</span>, <span class="string">"140.000"</span>, <span class="string">"145.500"</span>, <span class="string">"151.000"</span>, <span class="string">"156.500"</span>, <span class="string">"162.000"</span>, <span class="string">"167.500"</span>, <span class="string">"173.000"</span>, <span class="string">"178.500"</span>, <span class="string">"176.000"</span>, <span class="string">"170.500"</span>, <span class="string">"165.000"</span>, <span class="string">"159.500"</span>, <span class="string">"154.000"</span>, <span class="string">"148.500"</span>, <span class="string">"143.000"</span>, <span class="string">"137.500"</span>, <span class="string">"132.000"</span>, <span class="string">"126.500"</span>, <span class="string">"121.000"</span>, <span class="string">"115.500"</span>, <span class="string">"110.000"</span>, <span class="string">"104.500"</span>, <span class="string">"99.000"</span>, <span class="string">"93.500"</span>, <span class="string">"88.000"</span>, <span class="string">"82.500"</span>, <span class="string">"77.000"</span>, <span class="string">"71.500"</span>, <span class="string">"66.000"</span>, <span class="string">"60.500"</span>, <span class="string">"55.000"</span>, <span class="string">"49.500"</span>, <span class="string">"44.000"</span>, <span class="string">"38.500"</span>, <span class="string">"33.000"</span>, <span class="string">"27.500"</span>, <span class="string">"22.000"</span>, <span class="string">"16.500"</span>, <span class="string">"11.000"</span>, <span class="string">"5.500"</span>&#125;,</div><div class="line">    &#123;<span class="string">"0.000"</span>, <span class="string">"5.500"</span>, <span class="string">"11.000"</span>, <span class="string">"16.500"</span>, <span class="string">"22.000"</span>, <span class="string">"27.500"</span>, <span class="string">"33.000"</span>, <span class="string">"38.500"</span>, <span class="string">"44.000"</span>, <span class="string">"49.500"</span>, <span class="string">"55.000"</span>, <span class="string">"60.500"</span>, <span class="string">"66.000"</span>, <span class="string">"71.500"</span>, <span class="string">"77.000"</span>, <span class="string">"82.500"</span>, <span class="string">"88.000"</span>, <span class="string">"93.500"</span>, <span class="string">"99.000"</span>, <span class="string">"104.500"</span>, <span class="string">"110.000"</span>, <span class="string">"115.500"</span>, <span class="string">"121.000"</span>, <span class="string">"126.500"</span>, <span class="string">"132.000"</span>, <span class="string">"137.500"</span>, <span class="string">"143.000"</span>, <span class="string">"148.500"</span>, <span class="string">"154.000"</span>, <span class="string">"159.500"</span>, <span class="string">"165.000"</span>, <span class="string">"170.500"</span>, <span class="string">"176.000"</span>, <span class="string">"178.500"</span>, <span class="string">"173.000"</span>, <span class="string">"167.500"</span>, <span class="string">"162.000"</span>, <span class="string">"156.500"</span>, <span class="string">"151.000"</span>, <span class="string">"145.500"</span>, <span class="string">"140.000"</span>, <span class="string">"134.500"</span>, <span class="string">"129.000"</span>, <span class="string">"123.500"</span>, <span class="string">"118.000"</span>, <span class="string">"112.500"</span>, <span class="string">"107.000"</span>, <span class="string">"101.500"</span>, <span class="string">"96.000"</span>, <span class="string">"90.500"</span>, <span class="string">"85.000"</span>, <span class="string">"79.500"</span>, <span class="string">"74.000"</span>, <span class="string">"68.500"</span>, <span class="string">"63.000"</span>, <span class="string">"57.500"</span>, <span class="string">"52.000"</span>, <span class="string">"46.500"</span>, <span class="string">"41.000"</span>, <span class="string">"35.500"</span>&#125;</div><div class="line">&#125;;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> h, m;</div><div class="line">    <span class="keyword">while</span> (<span class="built_in">scanf</span>(<span class="string">"%d:%d"</span>, &amp;h, &amp;m), h || m)</div><div class="line">        <span class="built_in">puts</span>(table[h][m]);</div><div class="line"></div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-          
+      
+    </div>
+
+    <div>
+      
         
+
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
       
     </div>
 
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/03/12/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="WhiteCat (andyw330)">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.png">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="WhiteCat's Blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2017/03/12/hello-world/" itemprop="url">
-                  Blog開張
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">發表於</span>
-              
-              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-03-12T00:00:00+08:00">
-                2017-03-12
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分類於</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Blog/" itemprop="url" rel="index">
-                    <span itemprop="name">Blog</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
+            <a href="/tags/UVa/" rel="tag"># UVa</a>
           
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/03/12/hello-world/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/03/12/hello-world/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
         
-          
-            <h1 id="使用-Hexo-Github-建-Blog"><a href="#使用-Hexo-Github-建-Blog" class="headerlink" title="使用 Hexo + Github 建 Blog"></a>使用 Hexo + Github 建 Blog</h1><p>先前用過 logdown 來寫文章，但覺得它的 editor 不是很好用，而且還有很多問題（escape問題、光標跑掉等等QQ），所以就放棄了。比對過各種架站方法跟套件，最後選擇用 Hexo + Github 來做，看起來非常自由，架起來也非常快速，而且用 Github hosting 沒煩惱！</p>
-<h1 id="碎碎念"><a href="#碎碎念" class="headerlink" title="碎碎念"></a>碎碎念</h1><p>一直說要另外架blog寫文章，說了好久都沒有行動，直到現在終於架起來啦！⎝(　ﾟ∀ﾟ)⎠<br>至於文章走向大概會是放些CTF跟Online Judge題目的解法、技術相關文章，還有一些記事吧。<br>只不過有沒有那個毅力跟時間去寫就不知道了QQ<br>請大家多多指教~ ˊˇˋ</p>
-
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-
-    <footer class="post-footer">
       
 
       
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/03/12/hello-world/" rel="next" title="Blog開張">
+                <i class="fa fa-chevron-left"></i> Blog開張
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
 
       
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
           
           </div>
@@ -574,6 +453,17 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -593,8 +483,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.png"
@@ -683,6 +582,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#解法1"><span class="nav-number">1.</span> <span class="nav-text">解法1</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解法2"><span class="nav-number">2.</span> <span class="nav-text">解法2</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -795,6 +710,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 
@@ -811,9 +730,9 @@
 
     <script type="text/javascript">
       var disqus_shortname = 'whitecat';
-      var disqus_identifier = 'index.html';
+      var disqus_identifier = '2017/03/12/UVa-579-Clock-Hands/';
 
-      var disqus_title = "";
+      var disqus_title = "UVa 579 - Clock Hands";
 
 
       function run_disqus_script(disqus_script) {
@@ -826,6 +745,13 @@
 
       run_disqus_script('count.js');
 
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
       
 
     </script>
