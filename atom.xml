@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://andyw330.github.io/"/>
-  <updated>2017-03-12T16:55:01.000Z</updated>
+  <updated>2017-03-30T15:48:58.000Z</updated>
   <id>https://andyw330.github.io/</id>
   
   <author>
@@ -14,6 +14,36 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[VolgaCTF 2017 Quals] - VC 50</title>
+    <link href="https://andyw330.github.io/2017/03/30/VolgaCTF-2017-Quals-VC-50/"/>
+    <id>https://andyw330.github.io/2017/03/30/VolgaCTF-2017-Quals-VC-50/</id>
+    <published>2017-03-30T09:47:45.000Z</published>
+    <updated>2017-03-30T15:48:58.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="題目資訊"><a href="#題目資訊" class="headerlink" title="題目資訊"></a>題目資訊</h1><blockquote>
+<p>Category: Crypto<br>Point: 50<br>Description: There are files A.png and B.png. But where’s the flag?<br><a id="more"></a></p>
+</blockquote>
+<p>題目給的兩個 png 檔案：</p>
+<img src="/2017/03/30/VolgaCTF-2017-Quals-VC-50/A.png" alt="A.png" title="A.png">
+<img src="/2017/03/30/VolgaCTF-2017-Quals-VC-50/B.png" alt="B.png" title="B.png">
+<h1 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h1><p>方法很多，用<code>ImageMagick</code>的<code>compare</code>或是用<code>python PIL</code>都可以解，我是用前者解的。</p>
+<pre><code>compare -compose src A.png B.png output.png
+</code></pre><p>然後就會得到下面這張圖：</p>
+<img src="/2017/03/30/VolgaCTF-2017-Quals-VC-50/output.png" alt="compare output image" title="compare output image">
+<p>Flag: <code>VolgaCTF{Classic_secret_sharing_scheme}</code></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;題目資訊&quot;&gt;&lt;a href=&quot;#題目資訊&quot; class=&quot;headerlink&quot; title=&quot;題目資訊&quot;&gt;&lt;/a&gt;題目資訊&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;Category: Crypto&lt;br&gt;Point: 50&lt;br&gt;Description: There are files A.png and B.png. But where’s the flag?&lt;br&gt;
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>UVa 11559 - Event Planning</title>
