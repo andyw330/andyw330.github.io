@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://andyw330.github.io/"/>
-  <updated>2017-03-30T15:48:58.000Z</updated>
+  <updated>2017-03-30T15:54:28.000Z</updated>
   <id>https://andyw330.github.io/</id>
   
   <author>
@@ -20,11 +20,12 @@
     <link href="https://andyw330.github.io/2017/03/30/VolgaCTF-2017-Quals-VC-50/"/>
     <id>https://andyw330.github.io/2017/03/30/VolgaCTF-2017-Quals-VC-50/</id>
     <published>2017-03-30T09:47:45.000Z</published>
-    <updated>2017-03-30T15:48:58.000Z</updated>
+    <updated>2017-03-30T15:54:28.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="題目資訊"><a href="#題目資訊" class="headerlink" title="題目資訊"></a>題目資訊</h1><blockquote>
-<p>Category: Crypto<br>Point: 50<br>Description: There are files A.png and B.png. But where’s the flag?<br><a id="more"></a></p>
+<p>Category: Crypto<br>Point: 50<br>Description: There are files A.png and B.png. But where’s the flag?</p>
 </blockquote>
+<a id="more"></a>
 <p>題目給的兩個 png 檔案：</p>
 <img src="/2017/03/30/VolgaCTF-2017-Quals-VC-50/A.png" alt="A.png" title="A.png">
 <img src="/2017/03/30/VolgaCTF-2017-Quals-VC-50/B.png" alt="B.png" title="B.png">
@@ -38,10 +39,17 @@
     <summary type="html">
     
       &lt;h1 id=&quot;題目資訊&quot;&gt;&lt;a href=&quot;#題目資訊&quot; class=&quot;headerlink&quot; title=&quot;題目資訊&quot;&gt;&lt;/a&gt;題目資訊&lt;/h1&gt;&lt;blockquote&gt;
-&lt;p&gt;Category: Crypto&lt;br&gt;Point: 50&lt;br&gt;Description: There are files A.png and B.png. But where’s the flag?&lt;br&gt;
+&lt;p&gt;Category: Crypto&lt;br&gt;Point: 50&lt;br&gt;Description: There are files A.png and B.png. But where’s the flag?&lt;/p&gt;
+&lt;/blockquote&gt;
     
     </summary>
     
+      <category term="Write-ups" scheme="https://andyw330.github.io/categories/Write-ups/"/>
+    
+    
+      <category term="VolgaCTF 2017 Quals" scheme="https://andyw330.github.io/tags/VolgaCTF-2017-Quals/"/>
+    
+      <category term="Crypto" scheme="https://andyw330.github.io/tags/Crypto/"/>
     
   </entry>
   
