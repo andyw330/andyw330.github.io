@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://andyw330.github.io/"/>
-  <updated>2017-03-30T15:54:28.000Z</updated>
+  <updated>2017-03-30T16:26:27.000Z</updated>
   <id>https://andyw330.github.io/</id>
   
   <author>
@@ -19,8 +19,8 @@
     <title>[VolgaCTF 2017 Quals] - VC 50</title>
     <link href="https://andyw330.github.io/2017/03/30/VolgaCTF-2017-Quals-VC-50/"/>
     <id>https://andyw330.github.io/2017/03/30/VolgaCTF-2017-Quals-VC-50/</id>
-    <published>2017-03-30T09:47:45.000Z</published>
-    <updated>2017-03-30T15:54:28.000Z</updated>
+    <published>2017-03-30T09:47:00.000Z</published>
+    <updated>2017-03-30T16:26:27.000Z</updated>
     
     <content type="html"><![CDATA[<h1 id="題目資訊"><a href="#題目資訊" class="headerlink" title="題目資訊"></a>題目資訊</h1><blockquote>
 <p>Category: Crypto<br>Point: 50<br>Description: There are files A.png and B.png. But where’s the flag?</p>
@@ -51,14 +51,16 @@
     
       <category term="Crypto" scheme="https://andyw330.github.io/tags/Crypto/"/>
     
+      <category term="Visual cryptography" scheme="https://andyw330.github.io/tags/Visual-cryptography/"/>
+    
   </entry>
   
   <entry>
     <title>UVa 11559 - Event Planning</title>
     <link href="https://andyw330.github.io/2017/03/13/UVa-11559-Event-Planning/"/>
     <id>https://andyw330.github.io/2017/03/13/UVa-11559-Event-Planning/</id>
-    <published>2017-03-12T16:50:49.000Z</published>
-    <updated>2017-03-12T16:55:01.000Z</updated>
+    <published>2017-03-12T16:50:00.000Z</published>
+    <updated>2017-03-30T16:27:35.000Z</updated>
     
     <content type="html"><![CDATA[<p>題目連結：<a href="https://uva.onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;category=24&amp;page=show_problem&amp;problem=2595" target="_blank" rel="external">UVa 11559 - Event Planning</a><br><a id="more"></a></p>
 <h1 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h1><p>時間複雜度O(hw)</p>
@@ -81,8 +83,8 @@
     <title>UVa 579 - Clock Hands</title>
     <link href="https://andyw330.github.io/2017/03/12/UVa-579-Clock-Hands/"/>
     <id>https://andyw330.github.io/2017/03/12/UVa-579-Clock-Hands/</id>
-    <published>2017-03-12T13:53:37.000Z</published>
-    <updated>2017-03-12T16:47:35.000Z</updated>
+    <published>2017-03-12T13:53:00.000Z</published>
+    <updated>2017-03-30T16:27:41.000Z</updated>
     
     <content type="html"><![CDATA[<p>題目連結：<a href="https://uva.onlinejudge.org/index.php?option=com_onlinejudge&amp;Itemid=8&amp;category=24&amp;page=show_problem&amp;problem=520" target="_blank" rel="external">UVa 579 - Clock Hands</a></p>
 <h1 id="解法1"><a href="#解法1" class="headerlink" title="解法1"></a>解法1</h1><p>直接算角度相減，輸出小於等於180度角的部分 (0.030s)</p>
