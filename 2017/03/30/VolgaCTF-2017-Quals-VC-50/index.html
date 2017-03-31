@@ -100,7 +100,7 @@ Category: CryptoPoint: 50Description: There are files A.png and B.png. But where
 <meta property="og:image" content="https://andyw330.github.io/2017/03/30/VolgaCTF-2017-Quals-VC-50/A.png">
 <meta property="og:image" content="https://andyw330.github.io/2017/03/30/VolgaCTF-2017-Quals-VC-50/B.png">
 <meta property="og:image" content="https://andyw330.github.io/2017/03/30/VolgaCTF-2017-Quals-VC-50/output.png">
-<meta property="og:updated_time" content="2017-03-30T17:00:14.000Z">
+<meta property="og:updated_time" content="2017-03-31T06:04:05.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[VolgaCTF 2017 Quals] - VC 50">
 <meta name="twitter:description" content="題目資訊
@@ -389,9 +389,8 @@ Category: CryptoPoint: 50Description: There are files A.png and B.png. But where
 <p>題目給的兩個 png 檔案：</p>
 <img src="/2017/03/30/VolgaCTF-2017-Quals-VC-50/A.png" alt="A.png" title="A.png">
 <img src="/2017/03/30/VolgaCTF-2017-Quals-VC-50/B.png" alt="B.png" title="B.png">
-<h1 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h1><p>方法很多，用<code>ImageMagick</code>的<code>compare</code>或是用<code>python PIL</code>都可以解，我是用前者解的。</p>
-<pre><code>compare -compose src A.png B.png output.png
-</code></pre><p>然後就會得到下面這張圖：</p>
+<h1 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h1><p>方法很多，用<code>ImageMagick</code>的<code>compare</code>或是用<code>python PIL</code>都可以解，我是用前者解的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">compare -compose src A.png B.png output.png</div></pre></td></tr></table></figure></p>
+<p>然後就會得到下面這張圖：</p>
 <img src="/2017/03/30/VolgaCTF-2017-Quals-VC-50/output.png" alt="compare output image" title="compare output image">
 <p>Flag: <code>VolgaCTF{Classic_secret_sharing_scheme}</code></p>
 
@@ -525,7 +524,7 @@ Category: CryptoPoint: 50Description: There are files A.png and B.png. But where
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">文章</span>
               </a>
             </div>
@@ -547,7 +546,7 @@ Category: CryptoPoint: 50Description: There are files A.png and B.png. But where
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">標籤</span>
               </a>
             </div>
