@@ -389,7 +389,7 @@ Category: CryptoPoint: 50Description: There are files A.png and B.png. But where
 <p>題目給的兩個 png 檔案：</p>
 <img src="/2017/03/30/VolgaCTF-2017-Quals-VC-50/A.png" alt="A.png" title="A.png">
 <img src="/2017/03/30/VolgaCTF-2017-Quals-VC-50/B.png" alt="B.png" title="B.png">
-<h1 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h1><p>方法很多，用<code>ImageMagick</code>的<code>compare</code>或是用<code>python PIL</code>都可以解，我是用前者解的。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">compare -compose src A.png B.png output.png</div></pre></td></tr></table></figure></p>
+<h1 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h1><p>方法很多，用<code>ImageMagick</code>的<code>compare</code>或是用<code>python PIL</code>都可以解，我是用前者解的。<br><figure class="highlight stylus"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">compare -compose src A<span class="selector-class">.png</span> B<span class="selector-class">.png</span> output.png</div></pre></td></tr></table></figure></p>
 <p>然後就會得到下面這張圖：</p>
 <img src="/2017/03/30/VolgaCTF-2017-Quals-VC-50/output.png" alt="compare output image" title="compare output image">
 <p>Flag: <code>VolgaCTF{Classic_secret_sharing_scheme}</code></p>

