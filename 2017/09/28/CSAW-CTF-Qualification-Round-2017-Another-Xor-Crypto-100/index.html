@@ -1,0 +1,772 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-tw">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="WhiteCat's Blog" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="題目資訊
+Hey, hey can you find my secret.
+UPDATE 10:13 Eastern: the flag is whatever is in sys.argv[2]
+cipher.pyencrypted">
+<meta property="og:type" content="article">
+<meta property="og:title" content="[CSAW CTF Qualification Round 2017] - Another Xor (Crypto 100)">
+<meta property="og:url" content="https://andyw330.github.io/2017/09/28/CSAW-CTF-Qualification-Round-2017-Another-Xor-Crypto-100/index.html">
+<meta property="og:site_name" content="WhiteCat's Blog">
+<meta property="og:description" content="題目資訊
+Hey, hey can you find my secret.
+UPDATE 10:13 Eastern: the flag is whatever is in sys.argv[2]
+cipher.pyencrypted">
+<meta property="og:updated_time" content="2017-09-29T09:56:12.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="[CSAW CTF Qualification Round 2017] - Another Xor (Crypto 100)">
+<meta name="twitter:description" content="題目資訊
+Hey, hey can you find my secret.
+UPDATE 10:13 Eastern: the flag is whatever is in sys.argv[2]
+cipher.pyencrypted">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://andyw330.github.io/2017/09/28/CSAW-CTF-Qualification-Round-2017-Another-Xor-Crypto-100/"/>
+
+
+
+
+
+  <title> [CSAW CTF Qualification Round 2017] - Another Xor (Crypto 100) | WhiteCat's Blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-tw">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">WhiteCat's Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首頁
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分類
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            關於
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            歸檔
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            標籤
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="https://andyw330.github.io/2017/09/28/CSAW-CTF-Qualification-Round-2017-Another-Xor-Crypto-100/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="WhiteCat (andyw330)">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="WhiteCat's Blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                [CSAW CTF Qualification Round 2017] - Another Xor (Crypto 100)
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">發表於</span>
+              
+              <time title="創建於" itemprop="dateCreated datePublished" datetime="2017-09-28T17:46:42+08:00">
+                2017-09-28
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/09/28/CSAW-CTF-Qualification-Round-2017-Another-Xor-Crypto-100/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count" data-disqus-identifier="2017/09/28/CSAW-CTF-Qualification-Round-2017-Another-Xor-Crypto-100/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="題目資訊"><a href="#題目資訊" class="headerlink" title="題目資訊"></a>題目資訊</h1><blockquote>
+<p>Hey, hey can you find my secret.</p>
+<p>UPDATE 10:13 Eastern: the flag is whatever is in sys.argv[2]</p>
+<p><a href="https://ctf.csaw.io/files/ef303796b276cd0bdf4f7c61b2606df5/cipher.py" target="_blank" rel="external">cipher.py</a><br><a href="https://ctf.csaw.io/files/02a457c28ec0b04e5f7118e54ac8e138/encrypted" target="_blank" rel="external">encrypted</a></p>
+</blockquote>
+<a id="more"></a>
+<h1 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h1><p>題目給了加密方法跟加密過後的密文<br>cipher.py:<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> hashlib</div><div class="line"><span class="keyword">import</span> sys</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">xor</span><span class="params">(s1,s2)</span>:</span></div><div class="line">    <span class="keyword">return</span> <span class="string">''</span>.join(chr(ord(a) ^ ord(b)) <span class="keyword">for</span> a,b <span class="keyword">in</span> zip(s1,s2))</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">repeat</span><span class="params">(s, l)</span>:</span></div><div class="line">    <span class="keyword">return</span> (s*(int(l/len(s))+<span class="number">1</span>))[:l]</div><div class="line"></div><div class="line">key = sys.argv[<span class="number">1</span>]</div><div class="line">plaintext = sys.argv[<span class="number">2</span>] + key</div><div class="line">plaintext += hashlib.md5(plaintext).hexdigest()</div><div class="line">cipher = xor(plaintext, repeat(key, len(plaintext)))</div><div class="line"><span class="keyword">print</span> cipher.encode(<span class="string">'hex'</span>)</div></pre></td></tr></table></figure></p>
+<p>encrypted:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">274c10121a0100495b502d551c557f0b0833585d1b27030b5228040d3753490a1c025415051525455118001911534a0052560a14594f0b1e490a010c4514411e070014615a181b02521b580305170002074b0a1a4c414d1f1d171d00151b1d0f480e491e0249010c150050115c505850434203421354424c1150430b5e094d144957080d4444254643</div></pre></td></tr></table></figure></p>
+<p>分析一下cipher.py，可知：<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">flag = sys.argv[<span class="number">2</span>]</div><div class="line">key = sys.argv[<span class="number">1</span>]</div><div class="line">plaintext = flag + key + hashlib.md5(flag + key).hexdigest()</div></pre></td></tr></table></figure></p>
+<h2 id="找出-flag-跟-key-的長度"><a href="#找出-flag-跟-key-的長度" class="headerlink" title="找出 flag 跟 key 的長度"></a>找出 flag 跟 key 的長度</h2><p>先找 flag 跟 key 的長度可以確定兩者在 plaintext 位置。<br>因為 plaintext 裡有 key ，又是用 key 做 xor 加密，所以在 ciphertext 必定有一段全 xor 起來會是 0 ！<br>原理：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">假設：</div><div class="line">flag length = 3</div><div class="line">key length = 7</div><div class="line">plaintext = flag + key (=&gt; plaintext length = 10)</div><div class="line"></div><div class="line">則：</div><div class="line">ciphertext[0] = plaintext[0] ^ key[0]</div><div class="line">ciphertext[1] = plaintext[1] ^ key[1]</div><div class="line">ciphertext[2] = plaintext[2] ^ key[2]</div><div class="line">ciphertext[3] = plaintext[3] ^ key[3] = key[0] ^ key[3]</div><div class="line">ciphertext[4] = plaintext[4] ^ key[4] = key[1] ^ key[4]</div><div class="line">ciphertext[5] = plaintext[5] ^ key[5] = key[2] ^ key[5]</div><div class="line">ciphertext[6] = plaintext[6] ^ key[6] = key[3] ^ key[6]</div><div class="line">ciphertext[7] = plaintext[7] ^ key[0] = key[4] ^ key[0]</div><div class="line">ciphertext[8] = plaintext[8] ^ key[1] = key[5] ^ key[1]</div><div class="line">ciphertext[9] = plaintext[9] ^ key[2] = key[6] ^ key[3]</div><div class="line"></div><div class="line">顯然</div><div class="line">ciphertext[3] ^ ciphertext[4] ^ ... ^ ciphertext[9] = 0</div><div class="line">key length = 9 - 3 + 1 = 7</div><div class="line">flag length = 10 - 7 = 3</div></pre></td></tr></table></figure></p>
+<p>如此就能寫個 script 來找 key length 了。由於 md5 的部分不重要，所以可以先拿掉，再來對 ciphertext 從後面往前一直做 xor ，直到 xor 為 0。<br><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">encrypted = <span class="string">'274c10121a0100495b502d551c557f0b0833585d1b27030b5228040d3753490a1c025415051525455118001911534a0052560a14594f0b1e490a010c4514411e070014615a181b02521b580305170002074b0a1a4c414d1f1d171d00151b1d0f480e491e0249010c150050115c505850434203421354424c1150430b5e094d144957080d4444254643'</span></div><div class="line">cipher_and_key = encrypted[:<span class="number">-64</span>].decode(<span class="string">'hex'</span>) <span class="comment"># eliminate md5 part</span></div><div class="line"></div><div class="line">xor_all = <span class="number">0</span></div><div class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(cipher_and_key) - <span class="number">1</span>, <span class="number">-1</span>, <span class="number">-1</span>):</div><div class="line">    xor_all ^= ord(cipher_and_key[i])</div><div class="line">    <span class="keyword">if</span> xor_all == <span class="number">0</span>:</div><div class="line">        flag_len = i</div><div class="line">        key_len = len(cipher_and_key) - i</div><div class="line">        <span class="keyword">print</span> <span class="string">'flag length:'</span>, flag_len  <span class="comment"># 38</span></div><div class="line">        <span class="keyword">print</span> <span class="string">'key length:'</span>, key_len    <span class="comment"># 67</span></div><div class="line">        <span class="keyword">break</span></div></pre></td></tr></table></figure></p>
+<p>解得<br>flag length = 38<br>key length = 67</p>
+<h2 id="解出-key"><a href="#解出-key" class="headerlink" title="解出 key"></a>解出 key</h2><p>直接拿題目解出長度的情形來說明：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">已知：</div><div class="line">ciphertext</div><div class="line">plaintext = flag + key</div><div class="line">plaintext length = 105</div><div class="line"></div><div class="line">已算出：</div><div class="line">flag length = 38</div><div class="line">key length = 67</div><div class="line"></div><div class="line">則可知：</div><div class="line">ciphertext[ 0] = plaintext[ 0] ^ key[ 0]</div><div class="line">ciphertext[ 1] = plaintext[ 1] ^ key[ 1]</div><div class="line">...</div><div class="line">ciphertext[37] = plaintext[37] ^ key[37]</div><div class="line">ciphertext[38] = plaintext[38] ^ key[38] = key[ 0] ^ key[38]</div><div class="line">ciphertext[39] = plaintext[39] ^ key[39] = key[ 1] ^ key[39]</div><div class="line">...</div><div class="line">ciphertext[66] = plaintext[66] ^ key[66] = key[28] ^ key[66]</div><div class="line">ciphertext[67] = plaintext[67] ^ key[ 0] = key[29] ^ key[ 0]</div><div class="line">ciphertext[68] = plaintext[68] ^ key[ 1] = key[30] ^ key[ 1]</div><div class="line">...</div><div class="line">ciphertext[76] = plaintext[76] ^ key[ 9] = key[38] ^ key[ 9]</div><div class="line">...</div><div class="line">ciphertext[104] = plaintext[104] ^ key[37] = key[66] ^ key[37]</div><div class="line"></div><div class="line">若已知 key[0] ，則可以計算出 key[38] (key[38] = ciphertext[38] ^ key[0])</div><div class="line">=&gt; 已知 key[38] ，則可以計算出 key[9] (key[9] = ciphertext[76] ^ key[38])</div><div class="line">=&gt; 已知 key[9] ，則可以計算出 key[47] (key[47] = ciphertext[47] ^ key[9])</div><div class="line">=&gt; ...</div></pre></td></tr></table></figure></p>
+<p>因此只要給定一個 <code>key[0]</code> ，全部跑完就能得到完整 key 了，又 flag 開頭應該是 <code>&#39;flag{&#39;</code> ，所以可以由 <code>ciphertext[0] ^ ord(&#39;f&#39;)</code> 得到 <code>key[0]</code> 。</p>
+<p>解完 key 再對 ciphertext 做一次 xor 就可以了解得 flag 了！</p>
+<h2 id="解答-script"><a href="#解答-script" class="headerlink" title="解答 script"></a>解答 script</h2><p>完整的script如下：<br><figure class="highlight perl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div></pre></td><td class="code"><pre><div class="line">import hashlib</div><div class="line">import sys</div><div class="line"></div><div class="line">def <span class="keyword">xor</span>(s1,s2):</div><div class="line">    <span class="keyword">return</span> <span class="string">''</span>.join(<span class="keyword">chr</span>(<span class="keyword">ord</span>(a) ^ <span class="keyword">ord</span>(b)) <span class="keyword">for</span> a,b in zip(s1,s2))</div><div class="line"></div><div class="line">def repeat(<span class="keyword">s</span>, l):</div><div class="line">    <span class="keyword">return</span> (<span class="keyword">s</span>*(<span class="keyword">int</span>(l/len(<span class="keyword">s</span>))+<span class="number">1</span>))[:l]</div><div class="line"></div><div class="line">encrypted = <span class="string">'274c10121a0100495b502d551c557f0b0833585d1b27030b5228040d3753490a1c025415051525455118001911534a0052560a14594f0b1e490a010c4514411e070014615a181b02521b580305170002074b0a1a4c414d1f1d171d00151b1d0f480e491e0249010c150050115c505850434203421354424c1150430b5e094d144957080d4444254643'</span></div><div class="line">cipher_and_key = encrypted[:-<span class="number">64</span>].decode(<span class="string">'hex'</span>)</div><div class="line"></div><div class="line">xor_all = <span class="number">0</span></div><div class="line"></div><div class="line"><span class="keyword">for</span> i in range(len(cipher_and_key) - <span class="number">1</span>, -<span class="number">1</span>, -<span class="number">1</span>):</div><div class="line">    xor_all ^= <span class="keyword">ord</span>(cipher_and_key[i])</div><div class="line">    <span class="keyword">if</span> xor_all == <span class="number">0</span>:</div><div class="line">        flag_len = i</div><div class="line">        key_len = len(cipher_and_key) - i</div><div class="line">        <span class="keyword">print</span> <span class="string">'flag length:'</span>, flag_len  <span class="comment"># 38</span></div><div class="line">        <span class="keyword">print</span> <span class="string">'key length:'</span>, key_len    <span class="comment"># 67</span></div><div class="line">        <span class="keyword">break</span></div><div class="line"></div><div class="line">xored_flag = cipher_and_key[:flag_len]</div><div class="line">xored_key = cipher_and_key[flag_len:]</div><div class="line"></div><div class="line">key_num_lst = [<span class="number">0</span>] * key_len</div><div class="line"></div><div class="line"><span class="comment"># flag may start with 'flag&#123;', and we only need the first letter</span></div><div class="line">key_num_lst[<span class="number">0</span>] = <span class="keyword">ord</span>(<span class="string">'f'</span>) ^ <span class="keyword">ord</span>(xored_flag[<span class="number">0</span>])</div><div class="line"></div><div class="line"><span class="comment"># calc shift and get flag</span></div><div class="line"><span class="keyword">shift</span> = key_len - flag_len</div><div class="line">pre_idx = <span class="number">0</span></div><div class="line">idx = (pre_idx + <span class="keyword">shift</span>) % key_len</div><div class="line"><span class="keyword">while</span> key_num_lst[idx] == <span class="number">0</span>:</div><div class="line">    key_num_lst[idx] = key_num_lst[pre_idx] ^ <span class="keyword">ord</span>(xored_key[idx])</div><div class="line">    pre_idx = idx</div><div class="line">    idx = (pre_idx + <span class="keyword">shift</span>) % key_len</div><div class="line"></div><div class="line">key = <span class="string">''</span>.join(<span class="keyword">map</span>(<span class="keyword">chr</span>, key_num_lst))</div><div class="line"><span class="keyword">print</span> <span class="string">'key:'</span>, key</div><div class="line"></div><div class="line">flag = <span class="keyword">xor</span>(xored_flag, repeat(key, len(xored_flag)))</div><div class="line"><span class="keyword">print</span> <span class="string">'flag:'</span>, flag</div></pre></td></tr></table></figure></p>
+<p>解得<br>key: <code>A quart jar of oil mixed with zinc oxide makes a very bright paint|</code><br>flag: <code>flag{sti11_us3_da_x0r_for_my_s3cratz}|</code></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/09/24/CSAW-CTF-Qualification-Round-2017-baby-crypt-Crypto-350/" rel="next" title="[CSAW CTF Qualification Round 2017] - baby_crypt (Crypto 350)">
+                <i class="fa fa-chevron-left"></i> [CSAW CTF Qualification Round 2017] - baby_crypt (Crypto 350)
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+          
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目錄
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            本站概覽
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="WhiteCat (andyw330)" />
+          <p class="site-author-name" itemprop="name">WhiteCat (andyw330)</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">文章</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">3</span>
+                <span class="site-state-item-name">分類</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">標籤</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/andyw330" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://www.facebook.com/andyw330" target="_blank" title="Facebook">
+                  
+                    <i class="fa fa-fw fa-facebook"></i>
+                  
+                  Facebook
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#題目資訊"><span class="nav-number">1.</span> <span class="nav-text">題目資訊</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解法"><span class="nav-number">2.</span> <span class="nav-text">解法</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#找出-flag-跟-key-的長度"><span class="nav-number">2.1.</span> <span class="nav-text">找出 flag 跟 key 的長度</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解出-key"><span class="nav-number">2.2.</span> <span class="nav-text">解出 key</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解答-script"><span class="nav-number">2.3.</span> <span class="nav-text">解答 script</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">WhiteCat (andyw330)</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 強力驅動
+</div>
+
+<div class="theme-info">
+  主題 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.0"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+    <script type="text/javascript">
+      var disqus_shortname = 'whitecat';
+      var disqus_identifier = '2017/09/28/CSAW-CTF-Qualification-Round-2017-Another-Xor-Crypto-100/';
+
+      var disqus_title = "[CSAW CTF Qualification Round 2017] - Another Xor (Crypto 100)";
+
+
+      function run_disqus_script(disqus_script) {
+        var dsq = document.createElement('script');
+        dsq.type = 'text/javascript';
+        dsq.async = true;
+        dsq.src = '//' + disqus_shortname + '.disqus.com/' + disqus_script;
+        (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+      }
+
+      run_disqus_script('count.js');
+
+      
+        var disqus_config = function () {
+            this.page.url = disqus_url;
+            this.page.identifier = disqus_identifier;
+            this.page.title = disqus_title;
+        };
+        run_disqus_script('embed.js');
+      
+
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+  
+
+</body>
+</html>
